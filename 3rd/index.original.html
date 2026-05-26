@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3번째 술트럭파티 리포트</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍷</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #111111;
+            --card-bg: #1C1C1C;
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --primary-blue: #60A5FA;
+            --secondary-blue: #60A5FA;
+            --accent-orange: #FBBF24;
+            --accent-gold: #FCD34D;
+            --accent-purple: #A78BFA;
+            --accent-teal: #2DD4BF;
+            --border-color: #333333;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .top-visual-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img_bottle_main.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            margin-bottom: 40px;
+            
+            /* Initial Full Screen State */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            will-change: height, background-position;
+        }
+
+        header {
+            text-align: center;
+            padding: 0;
+            background: transparent;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-orange));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            will-change: font-size;
+        }
+
+        .subtitle {
+            color: var(--accent-orange);
+            font-size: 1.2rem;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            font-weight: 500;
+            text-shadow: none;
+        }
+
+        .intro-text {
+            max-width: 800px;
+            margin: 30px auto 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            line-height: 1.8;
+            color: var(--text-main);
+            text-align: left;
+            font-size: 0.95rem;
+            backdrop-filter: none;
+            border: none;
+        }
+
+        .liquor-list-section {
+            margin-bottom: 0;
+            padding: 0;
+        }
+
+        .liquor-list-section .section-title {
+            text-shadow: none;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .liquor-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .liquor-table th {
+            background: #2c2c2c;
+            color: var(--text-main);
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .liquor-table th:first-child {
+            width: 25px;
+            text-align: center;
+        }
+
+        .liquor-table th:nth-child(2) {
+            width: 48px;
+        }
+
+        .liquor-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+
+        .liquor-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .liquor-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .liquor-table .liquor-number {
+            font-weight: bold;
+            color: var(--accent-orange);
+            text-align: center;
+        }
+
+        .liquor-table .liquor-type {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .liquor-table .liquor-name {
+            color: var(--text-main);
+        }
+
+        .liquor-table .highlight-lemon {
+            background-color: rgba(251, 191, 36, 0.15); /* Darker lemon */
+        }
+
+        .liquor-table .highlight-lemon:hover {
+            background-color: rgba(251, 191, 36, 0.25);
+        }
+
+        @media (max-width: 900px) {
+            .table-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-two-columns {
+                grid-template-columns: 1fr !important;
+            }
+
+            .host-text, .host-image {
+                padding: 24px !important;
+            }
+
+            /* Mobile Spacing Adjustment */
+            .intro-text {
+                margin: 80px auto 80px !important;
+            }
+            .bottle-gallery {
+                margin-top: 80px !important; 
+                margin-bottom: 80px !important;
+            }
+            .grid.grid-two-columns {
+                margin-top: 80px !important;
+                margin-bottom: 80px !important;
+            }
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 15px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .grid.grid-two-columns {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary-blue);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: 0.02em;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+
+        .host-text {
+            padding: 24px 0 24px 24px;
+            line-height: 1.8;
+            color: var(--text-main);
+        }
+
+        .host-text p {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .host-text p.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .host-image {
+            padding: 24px 24px 24px 0;
+        }
+
+        .host-image img {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .host-image img.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .rank-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .rank-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .rank-item:last-child {
+            border-bottom: none;
+        }
+
+        .rank-num {
+            font-size: 1.5rem;
+            font-weight: bold;
+            width: 20px;
+            min-width: 20px;
+            color: var(--accent-orange);
+            flex-shrink: 0;
+            text-align: center;
+            padding-right: 10px;
+        }
+
+        .rank-info {
+            flex: 1;
+            min-width: 0;
+            padding: 0 15px;
+        }
+
+        .rank-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        .rank-type {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rank-score {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            width: 48px;
+            min-width: 48px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* Specific Layouts */
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        .custom-legend {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .color-box {
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+
+        .bottle-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .bottle-gallery img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            opacity: 0; /* Controlled by JS */
+            will-change: transform, opacity;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .bottle-gallery img:hover {
+            /* hover transform is handled in JS or needs !important if inline style exists */
+            /* But inline styles override CSS hover. We need to handle hover in JS or use !important here */
+            transform: translateY(-5px) !important; 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 100%;
+            max-height: 100dvh; /* 모바일 브라우저 대응 */
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .lightbox-close:hover {
+            color: #bbb;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-visual-section">
+        <div class="container">
+            <header>
+                <h1>Sooltluck Party, 3rd</h1>
+                <div class="subtitle">2025.11.22, Sat</div>
+            </header>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="intro-text" style="background: transparent; padding: 0; margin: 200px auto 200px;">
+            2025년 11월 22일, 오후 6시 30분. 서울 강남역 인근의 세모네모에서 3번째 술트럭파티가 열렸습니다. 호스트를 포함하여 18명의 참여자가 모였습니다. 
+            그리고 시음 진행자를 제외한 17명이 시음 평가를 진행했습니다. 참여자가 가지고 온 (중복 제외) 32종의 주류를 시음했습니다. 아래는 시음한 주류입니다. 숫자(No.)는 시음 순서 입니다.
+        </div>
+
+        <!-- Liquor List Section -->
+            <div class="liquor-list-section">
+                <h2 class="section-title">🍾 시음 주류 목록</h2>
+                <div class="table-grid">
+                    <!-- Table 1: Items 1-11 -->
+                    <table class="liquor-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>주종</th>
+                                <th>주류 이름</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="liquor-number">1</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">퓨엔테비나 FUENTEVINA</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">2</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">ROSA REGALE BRACHETTO D'ACQUI 2023</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">3</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">페어히즈 앵커 리제르바, 2022</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">4</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">젬마 디 루나 모스카토, 모스카토</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">5</td>
+                                <td class="liquor-type">황주</td>
+                                <td class="liquor-name">石库门 9년, Shanghai Shikumen (上海老酒)</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">6</td>
+                                <td class="liquor-type">맥주</td>
+                                <td class="liquor-name">Fedora Kölsch</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">7</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">MOSCATO D'ASTI 2024</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">8</td>
+                                <td class="liquor-type">약주</td>
+                                <td class="liquor-name">처음술 한산 소곡주</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">9</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">Louis Perdrier Brut Excellence</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">10</td>
+                                <td class="liquor-type">막걸리</td>
+                                <td class="liquor-name">호랑이 유자 막걸리</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">11</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">SWEET ROSE VINO FRIZZANTE</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Table 2: Items 12-22 -->
+                    <table class="liquor-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>주종</th>
+                                <th>주류 이름</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="liquor-number">12</td>
+                                <td class="liquor-type">황주</td>
+                                <td class="liquor-name">금색년화 5년</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">13</td>
+                                <td class="liquor-type">사케</td>
+                                <td class="liquor-name">아라고시 유즈 あらごし ゆず</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">14</td>
+                                <td class="liquor-type">막걸리</td>
+                                <td class="liquor-name">서울효모방 온섶 (제 5안, 25/26 W/S)</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">15</td>
+                                <td class="liquor-type">약주</td>
+                                <td class="liquor-name">감탄주 (기타주류, 과하주 스타일)</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">16</td>
+                                <td class="liquor-type">미드</td>
+                                <td class="liquor-name">허니비 와인</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">17</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">BRICCO QUAGLIA MOSCATO D'ASTI 2022</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">18</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">Louis Perdrier Brut Excellence (9번과 동일)</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">19</td>
+                                <td class="liquor-type">와인</td>
+                                <td class="liquor-name">PORTO VALDOURO TAWNY PORT</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">20</td>
+                                <td class="liquor-type">미드</td>
+                                <td class="liquor-name">코아베스트 사워보쉐</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">21</td>
+                                <td class="liquor-type">리큐르</td>
+                                <td class="liquor-name">복분자주 (비매품)</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">22</td>
+                                <td class="liquor-type">증류주</td>
+                                <td class="liquor-name">삭 SAK 블랙 50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Table 3: Items 23-33 -->
+                    <table class="liquor-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>주종</th>
+                                <th>주류 이름</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="liquor-number">23</td>
+                                <td class="liquor-type">사케</td>
+                                <td class="liquor-name">스이게이 토쿠베츠 준마이 (Drunken Whale)</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">24</td>
+                                <td class="liquor-type">위스키</td>
+                                <td class="liquor-name">THE GLENLEE 블렌디드 스카치 위스키 BATCH NO:2</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">25</td>
+                                <td class="liquor-type">위스키</td>
+                                <td class="liquor-name">Laproaig Quater cask</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">26</td>
+                                <td class="liquor-type">위스키</td>
+                                <td class="liquor-name">Ardbeg Corryvreckan</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">27</td>
+                                <td class="liquor-type">소주</td>
+                                <td class="liquor-name">백제소주, 술 익는 집 에디션</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">28</td>
+                                <td class="liquor-type">일본 소주</td>
+                                <td class="liquor-name">DAIYAME Hamada Syuzou (고구마 소주)</td>
+                            </tr>
+                            <tr>
+                                <td class="liquor-number">29</td>
+                                <td class="liquor-type">위스키</td>
+                                <td class="liquor-name">필리핀 위스키, 오크 캐스크</td>
+                            </tr>
+                            <tr class="highlight-lemon">
+                                <td class="liquor-number">30</td>
+                                <td class="liquor-type">백주</td>
+                                <td class="liquor-name">서울고량주 레드</td>
+                            </tr>
+                            <tr class="highlight-lemon">
+                                <td class="liquor-number">31</td>
+                                <td class="liquor-type">맥주</td>
+                                <td class="liquor-name">KARIYA 75 브루잉 (Strawberry Fruit 세종, 골든에일, 세션IPA)</td>
+                            </tr>
+                            <tr class="highlight-lemon">
+                                <td class="liquor-number">32</td>
+                                <td class="liquor-type">백주</td>
+                                <td class="liquor-name">한국고량주 극락 75도</td>
+                            </tr>
+                            <tr class="highlight-lemon">
+                                <td class="liquor-number">33</td>
+                                <td class="liquor-type">리큐르</td>
+                                <td class="liquor-name">강소백 리큐르 (복숭아, 유자, 포도)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="margin: 15px 0 0 0; padding: 0 24px; line-height: 1.8; color: var(--text-main);">
+                    시음 주류 목록에는 33개의 주류가 있지만 9번과 18번은 동일한 술입니다. 또한 29번까지 시음 평가를 했고 30~33번은 이벤트를 통해 시음을 진행했습니다. 0~5점 내에 점수를 매기는 방식으로 시음 평가를 하였습니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="bottle-gallery" style="margin-top: 160px; margin-bottom: 40px;">
+                <img src="img_bottle3.jpeg" alt="시음 주류 사진 3">
+                <img src="img_bottle1.jpeg" alt="시음 주류 사진 1">
+                <img src="img_bottle2.jpeg" alt="시음 주류 사진 2">
+                <img src="img_bottle4.jpeg" alt="시음 주류 사진 4">
+                <img src="img_bottle5.jpeg" alt="시음 주류 사진 5">
+                <img src="img_bottle6.jpeg" alt="시음 주류 사진 6">
+            </div>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 10px; margin-bottom: 240px; font-style: italic;">
+                위 이미지는 참여자분들께서 촬영하신 주류 사진 입니다.
+            </p>
+        </div>
+
+        <div class="container">
+            <!-- Section 1: Overall Ranking -->
+            <div class="grid">
+                <div class="card full-width">
+                    <h2 class="section-title">🏆 전체 주류 순위</h2>
+                    <div class="custom-legend">
+                        <div class="legend-item"><span class="color-box" style="background: #3B82F6;"></span>전통주
+                        </div>
+                        <div class="legend-item"><span class="color-box" style="background: #F59E0B;"></span>위스키
+                        </div>
+                        <div class="legend-item"><span class="color-box" style="background: #8B5CF6;"></span>와인
+                        </div>
+                        <div class="legend-item"><span class="color-box" style="background: #14B8A6;"></span>기타
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="rankingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Averages Comparison -->
+            <div class="grid grid-two-columns">
+                <div class="card">
+                    <h2 class="section-title">📊 주종별 평균 점수</h2>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <div style="padding: 24px; line-height: 1.8; color: var(--text-main);">
+                    <p style="margin-bottom: 15px;">
+                        시음은 저도수 주류부터 시작해서 고도수 주류 순서로 진행했습니다. 시음 1위는 Ardbeg Corryvreckan으로 3.95점을 받았습니다. 저도수 부분에서는 BRICCO QUAGLIA MOSCATO D'ASTI가 3.86점으로 1위를 했습니다. 중국 전통주인 황주와 정통 방식의 약주 중 대표 주자인 한산 소곡주는 2점에 미치지 못하며 선호도가 낮음을 알 수 있었습니다. 의도치 않게 Louis Perdrier Brut Excellence은 2번 시음을 하게 되면서 일관성있는지 확인해 볼 수 있었습니다. (9번은 3.02점, 18번은 3.27점)
+                    </p>
+                    <p style="margin-bottom: 0;">
+                        술트럭파티를 참여할 정도로 술을 좋아하는 분들은 위스키를 좋아하는 성향이 있었습니다. 모든 위스키가 평균 이상의 점수를 받았고, 전통주와 와인은 비교적 편차가 있었습니다.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Party Photos Gallery -->
+            <div class="bottle-gallery" style="margin: 300px 0; grid-template-columns: 1fr;">
+                <img src="img_all1.jpg" alt="술트럭파티 현장 사진 1">
+                <img src="img_all2.jpg" alt="술트럭파티 현장 사진 2">
+                <img src="img_all3.jpg" alt="술트럭파티 현장 사진 3">
+            </div>
+
+            <div style="padding: 24px; line-height: 1.8; color: var(--text-main); margin-bottom: 80px;">
+                <p style="margin: 0;">
+                    아래 '연령대별 Top 5'와 '성별 Top 5'는 각 그룹에 속한 참여자들의 평가 점수만을 기준으로 산출한 순위입니다. 예를 들어, '20대의 선택'은 20대 참여자들이 매긴 점수의 평균으로 계산되었으며, 전체 평균 점수와는 다를 수 있습니다.
+                </p>
+            </div>
+
+            <!-- Section 3: Top 5 by Age -->
+            <h2 class="section-title">🎂 연령대별 Top 5</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 style="color: var(--secondary-blue); margin-top:0;">20대의 선택</h3>
+                    <ul class="rank-list" id="top20s"></ul>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--accent-purple); margin-top:0;">30대의 선택</h3>
+                    <ul class="rank-list" id="top30s"></ul>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--accent-orange); margin-top:0;">40대의 선택</h3>
+                    <ul class="rank-list" id="top40s"></ul>
+                </div>
+            </div>
+
+            <!-- Section 4: Top 5 by Gender -->
+            <h2 class="section-title">👫 성별 Top 5</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 style="color: var(--secondary-blue); margin-top:0;">Gentleman's Pick</h3>
+                    <ul class="rank-list" id="topMale"></ul>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--accent-purple); margin-top:0;">Ladies' Pick</h3>
+                    <ul class="rank-list" id="topFemale"></ul>
+                </div>
+            </div>
+
+            <!-- Closing Message Section -->
+            <div class="grid grid-two-columns" style="margin-top: 200px; margin-bottom: 160px; align-items: center; gap: 0;">
+                <div class="host-text">
+                    <p style="margin-bottom: 20px; font-weight: 500; color: var(--text-muted);">
+                        참여자 여러분 덕분에 파티가 한층 더 풍성해졌습니다.
+                    </p>
+                    
+                    <p style="margin-bottom: 5px;">"진행 전에 호스트와 함께 파티를 준비해주신 분"</p>
+                    <p style="margin-bottom: 5px;">"술트럭파티를 다시 찾아와 주신 분"</p>
+                    <p style="margin-bottom: 5px;">"예쁜 인증샷을 위해 참가용 술을 감각적으로 배치해주신 분"</p>
+                    <p style="margin-bottom: 5px;">"참가용 술에 얽힌 인상적인 스토리를 들려주신 분"</p>
+                    <p style="margin-bottom: 5px;">"쉽게 구할 수 없는 귀한 술을 가져와 주신 분"</p>
+                    <p style="margin-bottom: 5px;">"꼼꼼하게 시음 평가를 남겨주신 분"</p>
+                    <p style="margin-bottom: 20px;">"뒷풀이까지 텐션 높게 즐겨주신 분"</p>
+                    
+                    <p style="margin-bottom: 20px; color: var(--text-muted);">
+                        모두가 호스트를 도와주시고 함께 즐겨주신 덕분에<br>
+                        이번 파티를 열길 잘했다는 생각이 들었습니다.<br>
+                        2026년에도 또 한 번 술트럭 파티를 열고 싶어지네요.
+                    </p>
+                    
+                    <p style="margin-bottom: 20px; color: var(--text-muted);">
+                        어느덧 2025년도 한 달 정도만 남았네요.<br>
+                        건강하고 기분 좋은 한 잔과 함께 한 해 잘 마무리하시길 바랍니다. 감사합니다.
+                    </p>
+                    
+                    <p style="margin-bottom: 0; text-align: center; font-style: italic;">
+                        - 호스트 이지원, 손종국 -
+                    </p>
+                </div>
+
+                <div class="host-image">
+                    <img src="img_host.jpg" alt="호스트 사진" style="width: 50%; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: block; margin: 0 auto;">
+                </div>
+            </div>
+
+            <footer>
+                Made by Jongkook&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Sooltluck Party
+            </footer>
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="lightbox">
+            <span class="lightbox-close">&times;</span>
+            <img class="lightbox-content" id="lightbox-img">
+        </div>
+
+        <script>
+            // Raw CSV Data
+            const csvData = `
+,,,,,,,,,,,,,,,,,,,,
+,,,,나이대,30대,20대,30대,20대,20대,20대,20대,40대,40대,20대,30대,30대,40대,20대,30대,20대,30대,
+,,,,성별,남,남,남,여,여,남,여,남,남,여,남,여,남,여,남,남,남,
+,전통주,주종,주류 이름,No,김헌진,이현우,양상우,김나정,최수빈,최윤한,이정민,박성규,이장군,최지원,김범준,왕소정,박정현,이지원,강태우,김진욱,이은상,평균
+,,와인,퓨엔테비나 FUENTEVINA,1,2,,2,2,2,2,3,2,3,2.8,3,3,4,3,4,3,3,2.74
+,,와인,ROSA REGALE BRACHETTO D'ACQUI 2023,2,3,,3,5,4,3.5,3,3,3,2.8,3,1,2,4,4,3,2,3.08
+,,와인,"페어히즈 앵커 리제르바, 2022",3,3,,2,4,4,3.5,4,3,3.5,3,2,3,5,5,2.5,4,3,3.41
+,,와인,"젬마 디 루나 모스카토, 모스카토",4,1,4,3,5,5,4.5,5,3.5,3,3.2,4,1,2,3,5,3,2,3.36
+,,황주,"石库门 9년, Shanghai Shikumen (上海老酒)",5,1,2.5,2,0,1,2,1,3,2,1.5,2,2.5,4,3,2,2,2,1.97
+,,맥주,Fedora Kölsch,6,3,3,2,3,5,3.8,4,4.5,3.5,3.8,5,3,5,4,4,3,3.5,3.71
+,,와인,MOSCATO D'ASTI 2024,7,2,4.5,2,5,5,4.2,2,1,3,3.2,4,4,1,4,5,3,2,3.23
+,O,약주,처음술 한산 소곡주,8,2,3.5,2,0,0,1,1,2,2.5,2,2,2.5,1,3,3,2,3,1.91
+,,와인,Louis Perdrier Brut Excellence,9,3,3.5,3,3,2,4,4,3,,3.3,3,1,3,4,3.5,3,2,3.02
+,O,막걸리,호랑이 유자 막걸리,10,3,4.7,4,5,1,4.7,2,3.5,4,3.5,4,1,2,3,5,3,,3.34
+,,와인,SWEET ROSE VINO FRIZZANTE,11,2,4,3,5,4,4.5,4,3,3.5,3.5,3,1,3,3,4,3,2.5,3.29
+,,황주,금색년화 5년,12,1,2.5,2,0,5,1,1,1.5,2,2,2,1,2,2,2,2,,1.81
+,,사케,아라고시 유즈 あらごし ゆず,13,3,4.2,4,5,0,4.8,5,4.5,2.5,3.2,3,2,4,5,4,4,3.5,3.63
+,O,막걸리,"서울효모방 온섶 (제 5안, 25/26 W/S)",14,2,4.5,3,4,0,2,3,,2,2,2,3,4,4,3,3,3.5,2.81
+,O,약주,"감탄주 (기타주류, 과하주 스타일)",15,1,2.7,2,4,5,4,3,4,3,2.8,4,3.5,4,2,5,3,3.5,3.32
+,O,미드,허니비 와인,16,2,4.4,4,5,,4,4,4,4,3.8,4,3,5,4,3,3,3,3.76
+,,와인,BRICCO QUAGLIA MOSCATO D'ASTI 2022,17,3,4,4.5,5,,4.2,5,5,4.5,3.5,4,3,4,4,3,3,2,3.86
+,,와인,Louis Perdrier Brut Excellence (9번과 동일),18,2,3.8,3,3,,3,3,4.5,3,3.8,2,1,5,4,4,4,,3.27
+,,와인,PORTO VALDOURO TAWNY PORT,19,1,3.2,3,1,,3,3,3,3.5,3.7,3,3,2,4,4,3,3,2.90
+,O,미드,코아베스트 사워보쉐,20,2,3.7,3,3,,4.4,3,3.5,4,4,3,4,4,5,4,3,4,3.60
+,,리큐르,복분자주 (비매품),21,1,3.5,2,4,,2.5,5,4,,3.5,4,3,4,4,5,3,4.5,3.53
+,O,증류주,삭 SAK 블랙 50,22,1,3.7,2,,,3,2,4,2.5,3.5,3,2,3,3,5,4,4.5,3.08
+,,사케,스이게이 토쿠베츠 준마이 (Drunken Whale),23,2,3.9,2,,,3.2,3,,3.5,,3,1.5,5,3,4.5,3,4.5,3.24
+,,위스키,THE GLENLEE 블렌디드 스카치 위스키 BATCH NO:2,24,3,4.2,4,,,1.8,2,4,4,3.2,3,2,4,4,4,4,4.5,3.45
+,,위스키,Laproaig Quater cask,25,3,4.7,5,,,4.5,3,4,3.5,,3,3,3,3,3.5,4,3,3.59
+,,위스키,Ardbeg Corryvreckan,26,3,4.5,4.5,,,5,5,3,5,4.3,4,4,3,3.5,3.5,4,3,3.95
+,O,소주,"백제소주, 술 익는 집 에디션",27,1,2.4,3,,,2.9,4,2,2.5,,3,0,4,4,5,4,3.5,2.95
+,,일본 소주,DAIYAME Hamada Syuzou (고구마 소주),28,2,2.8,3,1,,3,4,3.5,3,,3,3,3,4,3,3,3.5,2.99
+,,위스키,"필리핀 위스키, 오크 캐스크",29,2,4.7,3,2,,3.4,4,,,3.6,3,4,4,4.5,4,4,2,3.44
+,,,,,2.07,3.73,2.93,3.22,2.87,3.36,3.28,3.31,3.21,3.18,3.14,2.38,3.41,3.66,3.84,3.21,3.10,3.18
+`;
+
+            // --- Data Parsing Logic ---
+            function parseCSV(csv) {
+                const lines = csv.trim().split('\n');
+
+                // Line 2: Age Groups (Index 5 to 21)
+                const ageLine = lines[1].split(',');
+                const ages = ageLine.slice(5, 22); // 17 evaluators
+
+                // Line 3: Gender (Index 5 to 21)
+                const genderLine = lines[2].split(',');
+                const genders = genderLine.slice(5, 22);
+
+                // Line 5 onwards: Liquor Data
+                const liquors = [];
+
+                for (let i = 4; i < lines.length; i++) {
+                    const line = lines[i];
+                    if (!line.trim() || line.startsWith(',,,,,')) continue; // Skip empty or summary lines
+
+                    // Handle quoted strings (e.g., "Name, with comma")
+                    // Simple regex split won't work perfectly for nested commas, but let's try a robust split
+                    // Or since we know the structure, we can be smarter.
+                    // Actually, let's use a simple regex for CSV splitting that handles quotes
+                    const row = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
+                    // The above regex is a bit flaky. Let's write a proper simple parser or just handle the specific known quotes.
+                    // Given the data, names are in quotes if they contain commas.
+
+                    // Better approach: Split by comma, but rejoin if inside quotes.
+                    const parts = [];
+                    let current = '';
+                    let inQuote = false;
+
+                    for (let char of line) {
+                        if (char === '"') {
+                            inQuote = !inQuote;
+                        } else if (char === ',' && !inQuote) {
+                            parts.push(current);
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    parts.push(current);
+
+                    // Clean up parts (remove surrounding quotes)
+                    const cleanParts = parts.map(p => p.trim().replace(/^"|"$/g, ''));
+
+                    const isTraditional = cleanParts[1] === 'O';
+                    const type = cleanParts[2];
+                    const name = cleanParts[3];
+                    const scores = cleanParts.slice(5, 22).map(s => s === '' ? null : parseFloat(s));
+
+                    // Calculate average (ignoring nulls)
+                    const validScores = scores.filter(s => s !== null);
+                    const average = validScores.reduce((a, b) => a + b, 0) / validScores.length;
+
+                    liquors.push({
+                        isTraditional,
+                        type,
+                        name,
+                        scores,
+                        average
+                    });
+                }
+
+                return { ages, genders, liquors };
+            }
+
+            const data = parseCSV(csvData);
+
+            // --- Data Processing ---
+
+            // 1. Overall Ranking
+            const sortedByAvg = [...data.liquors].sort((a, b) => b.average - a.average);
+
+            // 2. Category Averages
+            function getCategoryAvg(filterFn) {
+                const filtered = data.liquors.filter(filterFn);
+                if (filtered.length === 0) return 0;
+                const sum = filtered.reduce((acc, curr) => acc + curr.average, 0);
+                return sum / filtered.length;
+            }
+
+            const avgTraditional = getCategoryAvg(l => l.isTraditional);
+            const avgWhisky = getCategoryAvg(l => l.type.includes('위스키'));
+            const avgWine = getCategoryAvg(l => l.type.includes('와인'));
+            const avgOverall = getCategoryAvg(() => true);
+
+            // 3. Top 5 by Age/Gender
+            function getTop5By(filterIndexFn) {
+                // Calculate average for each liquor based ONLY on specific evaluators
+                const ranked = data.liquors.map(l => {
+                    const relevantScores = l.scores.filter((_, idx) => filterIndexFn(idx));
+                    const validScores = relevantScores.filter(s => s !== null);
+                    const avg = validScores.length ? validScores.reduce((a, b) => a + b, 0) / validScores.length : -1;
+                    return { ...l, specificAvg: avg };
+                }).sort((a, b) => b.specificAvg - a.specificAvg);
+
+                return ranked.slice(0, 5);
+            }
+
+            const top20s = getTop5By(idx => data.ages[idx] === '20대');
+            const top30s = getTop5By(idx => data.ages[idx] === '30대');
+            const top40s = getTop5By(idx => data.ages[idx] === '40대');
+
+            const topMale = getTop5By(idx => data.genders[idx] === '남');
+            const topFemale = getTop5By(idx => data.genders[idx] === '여');
+
+            // Count participants by age and gender
+            const count20s = data.ages.filter(age => age === '20대').length;
+            const count30s = data.ages.filter(age => age === '30대').length;
+            const count40s = data.ages.filter(age => age === '40대').length;
+            const countMale = data.genders.filter(gender => gender === '남').length;
+            const countFemale = data.genders.filter(gender => gender === '여').length;
+
+            // --- Rendering ---
+
+            // Chart Global Defaults
+            Chart.defaults.color = '#9CA3AF'; // Light grey text
+            Chart.defaults.font.family = "'Outfit', sans-serif";
+            Chart.defaults.borderColor = '#374151'; // Dark border for grids
+
+            // 1. Ranking Chart
+            new Chart(document.getElementById('rankingChart'), {
+                data: {
+                    labels: sortedByAvg.map(l => l.name.length > 15 ? l.name.substring(0, 15) + '...' : l.name),
+                    datasets: [
+                        {
+                            type: 'bar',
+                            label: '평균 점수',
+                            data: sortedByAvg.map(l => l.average),
+                            backgroundColor: sortedByAvg.map(l => {
+                                if (l.type.includes('위스키')) return 'rgba(245, 158, 11, 0.8)'; // Amber
+                                if (l.type.includes('와인')) return 'rgba(139, 92, 246, 0.8)'; // Purple
+                                if (l.isTraditional) return 'rgba(59, 130, 246, 0.8)'; // Blue (Traditional)
+                                return 'rgba(20, 184, 166, 0.8)'; // Teal (Others)
+                            }),
+                            borderColor: sortedByAvg.map(l => {
+                                if (l.type.includes('위스키')) return '#F59E0B';
+                                if (l.type.includes('와인')) return '#8B5CF6';
+                                if (l.isTraditional) return '#3B82F6';
+                                return '#14B8A6';
+                            }),
+                            borderWidth: 1,
+                            order: 2
+                        },
+                        {
+                            type: 'line',
+                            label: `전체 평균 (29개, ${avgOverall.toFixed(2)})`,
+                            data: Array(sortedByAvg.length).fill(avgOverall),
+                            borderColor: '#ffffff',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            pointRadius: 0,
+                            fill: false,
+                            order: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: { color: '#6B7280' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: (ctx) => {
+                                    // Show full liquor name in tooltip
+                                    return sortedByAvg[ctx[0].dataIndex].name;
+                                },
+                                label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(2)} / 5.0`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: 1.0,
+                            max: 4.5,
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            const countTraditional = data.liquors.filter(l => l.isTraditional).length;
+            const countWhisky = data.liquors.filter(l => l.type.includes('위스키')).length;
+            const countWine = data.liquors.filter(l => l.type.includes('와인')).length;
+
+            // 2. Category Chart
+            new Chart(document.getElementById('categoryChart'), {
+                data: {
+                    labels: [`전통주 (${countTraditional}개)`, `위스키 (${countWhisky}개)`, `와인 (${countWine}개)`],
+                    datasets: [
+                        {
+                            type: 'bar',
+                            label: '평균 점수',
+                            data: [avgTraditional, avgWhisky, avgWine],
+                            backgroundColor: [
+                                'rgba(59, 130, 246, 0.8)', // Traditional (Blue)
+                                'rgba(245, 158, 11, 0.8)', // Whisky (Amber)
+                                'rgba(139, 92, 246, 0.8)', // Wine (Purple)
+                            ],
+                            borderColor: [
+                                '#3B82F6',
+                                '#F59E0B',
+                                '#8B5CF6',
+                            ],
+                            borderWidth: 1,
+                            order: 2
+                        },
+                        {
+                            type: 'line',
+                            label: `전체 평균 (29개, ${avgOverall.toFixed(2)})`,
+                            data: [avgOverall, avgOverall, avgOverall],
+                            borderColor: '#ffffff',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            pointRadius: 0,
+                            fill: false,
+                            order: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: { color: '#6B7280' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(2)} / 5.0`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 5,
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+
+
+            // Render Lists
+            function renderList(elementId, items) {
+                const el = document.getElementById(elementId);
+                items.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'rank-item';
+                    li.innerHTML = `
+                <div class="rank-num">${index + 1}</div>
+                <div class="rank-info">
+                    <span class="rank-name">${item.name}</span>
+                    <span class="rank-type">${item.type}</span>
+                </div>
+                <div class="rank-score">${item.specificAvg.toFixed(2)}</div>
+            `;
+                    el.appendChild(li);
+                });
+            }
+
+            renderList('top20s', top20s);
+            renderList('top30s', top30s);
+            renderList('top40s', top40s);
+            renderList('topMale', topMale);
+            renderList('topFemale', topFemale);
+
+            // Update titles with participant counts
+            document.querySelector('#top20s').previousElementSibling.textContent = `20대의 선택 (${count20s}명)`;
+            document.querySelector('#top30s').previousElementSibling.textContent = `30대의 선택 (${count30s}명)`;
+            document.querySelector('#top40s').previousElementSibling.textContent = `40대의 선택 (${count40s}명)`;
+            document.querySelector('#topMale').previousElementSibling.textContent = `Gentleman's Pick (${countMale}명)`;
+            document.querySelector('#topFemale').previousElementSibling.textContent = `Ladies' Pick (${countFemale}명)`;
+
+            // Lightbox functionality
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const galleryImages = document.querySelectorAll('.bottle-gallery img');
+
+            // Open lightbox when clicking on gallery images
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    lightbox.classList.add('active');
+                    lightboxImg.src = this.src;
+                });
+            });
+
+            // Close lightbox when clicking the close button
+            lightboxClose.addEventListener('click', function() {
+                lightbox.classList.remove('active');
+            });
+
+            // Close lightbox when clicking outside the image
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+
+            // Close lightbox with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                }
+            });
+
+            // Scroll Animation for Hero Section
+            const heroSection = document.querySelector('.top-visual-section');
+            const heroTitle = document.querySelector('h1');
+
+            function updateHero() {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const windowWidth = window.innerWidth;
+                const animationDistance = windowHeight * 0.5;
+                
+                let progress = Math.min(scrollY / animationDistance, 1);
+                
+                const minHeroHeight = 400;
+                
+                // 1. Height
+                const startHeight = windowHeight;
+                const currentHeight = startHeight - (startHeight - minHeroHeight) * progress;
+                heroSection.style.height = `${currentHeight}px`;
+                
+                // 2. Font Size (Responsive)
+                let startFont = 5;
+                let endFont = 3.5;
+                
+                if (windowWidth <= 900) {
+                    startFont = 2.5; // Smaller for mobile
+                    endFont = 1.8;
+                }
+                
+                const currentFont = startFont - (startFont - endFont) * progress;
+                heroTitle.style.fontSize = `${currentFont}rem`;
+                
+                // 3. Background Position
+                const startBgY = 50;
+                const endBgY = 0;
+                const currentBgY = startBgY - (startBgY - endBgY) * progress;
+                heroSection.style.backgroundPosition = `center ${currentBgY}%`;
+            }
+
+            window.addEventListener('scroll', updateHero);
+            window.addEventListener('resize', updateHero);
+            
+            setTimeout(updateHero, 100);
+
+            // Scroll-linked Animation for Gallery
+            const animGalleryImages = document.querySelectorAll('.bottle-gallery img');
+            
+            function updateGallery() {
+                const windowHeight = window.innerHeight;
+                
+                animGalleryImages.forEach((img, index) => {
+                    const rect = img.getBoundingClientRect();
+                    
+                    // Logic:
+                    // If image top > viewCenter: Animate (Slide/Fade In)
+                    // If image top <= viewCenter: Fixed (Static)
+                    
+                    const imgTop = rect.top;
+                    const viewThreshold = windowHeight * 0.7; // 70%
+                    
+                    let effectFactor = 0;
+                    let opacity = 1;
+                    
+                    if (imgTop > viewThreshold) {
+                        // Below threshold: Animation zone
+                        const dist = imgTop - viewThreshold;
+                        const maxDist = windowHeight / 1.5;
+                        
+                        effectFactor = Math.min(dist / maxDist, 1);
+                        opacity = 1 - effectFactor;
+                    } else {
+                        // Above threshold: Static
+                        effectFactor = 0;
+                        opacity = 1;
+                    }
+                    
+                    const isOdd = index % 2 !== 0;
+                    const direction = isOdd ? -1 : 1;
+                    const maxOffset = 300; // Increased offset for dramatic effect
+                    
+                    const translateX = direction * effectFactor * maxOffset;
+                    
+                    if (effectFactor <= 0.01) {
+                        img.style.transform = 'none';
+                        img.style.opacity = 1;
+                    } else {
+                        img.style.transform = `translateX(${translateX}px)`;
+                        img.style.opacity = opacity;
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', () => {
+                requestAnimationFrame(updateGallery);
+            });
+            window.addEventListener('resize', updateGallery);
+            updateGallery();
+
+            // Slide In Effect for Host Text
+            const hostTextContainer = document.querySelector('.host-text');
+            if (hostTextContainer) {
+                const paragraphs = hostTextContainer.querySelectorAll('p');
+                let timeouts = [];
+
+                const textObserver = new IntersectionObserver((entries) => {
+                    const entry = entries[0];
+                    if(entry.isIntersecting) {
+                        paragraphs.forEach((p, index) => {
+                            const timer = setTimeout(() => {
+                                p.classList.add('visible');
+                            }, index * 150);
+                            timeouts.push(timer);
+                        });
+                    } else {
+                        // Only remove visible class on desktop to prevent text disappearing on mobile
+                        if (window.innerWidth > 900) {
+                            timeouts.forEach(t => clearTimeout(t));
+                            timeouts = [];
+                            paragraphs.forEach(p => {
+                                p.classList.remove('visible');
+                            });
+                        }
+                    }
+                }, { threshold: 0.2, rootMargin: '-100px 0px' });
+                
+                textObserver.observe(hostTextContainer);
+            }
+
+            // Host Image Scroll Effect (Zoom In/Out)
+            const hostImage = document.querySelector('.host-image img');
+            if (hostImage) {
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        } else {
+                            entry.target.classList.remove('visible');
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '-300px 0px' });
+                
+                imageObserver.observe(hostImage);
+            }
+
+        </script>
+</body>
+
+</html>

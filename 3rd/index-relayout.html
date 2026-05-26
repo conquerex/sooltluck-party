@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sooltluck Party · Vol. N° 03 — Re-layout</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍷</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Outfit:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #111111;
+            --bg-deep: #0B0B0B;
+            --ink: #F3F4F6;
+            --ink-muted: #9CA3AF;
+            --paper: #E8DFC9;
+            --paper-muted: #8B826B;
+            --paper-faint: rgba(232, 223, 201, 0.22);
+            --primary-blue: #60A5FA;
+            --accent-orange: #FBBF24;
+            --accent-purple: #A78BFA;
+            --accent-teal: #2DD4BF;
+            --rule: rgba(232, 223, 201, 0.18);
+            --rule-faint: rgba(232, 223, 201, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; overflow-x: hidden; }
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 15% 0%, rgba(251, 191, 36, 0.07), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 90% 100%, rgba(96, 165, 250, 0.06), transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .frame { position: relative; z-index: 2; }
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 56px; }
+
+        img { max-width: 100%; height: auto; }
+
+        /* ─────── Masthead ─────── */
+        .masthead {
+            padding: 28px 0 22px;
+            border-bottom: 1px solid var(--rule);
+        }
+        .masthead .inner {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: baseline;
+            gap: 28px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+        }
+        .masthead a {
+            color: var(--paper-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .masthead a:hover { color: var(--accent-orange); }
+        .masthead .center {
+            color: var(--paper);
+            letter-spacing: 0.4em;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 14px;
+        }
+        .masthead .center .glyph {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 300;
+            color: var(--accent-orange);
+            font-size: 1rem;
+            letter-spacing: 0;
+        }
+        .masthead .right { text-align: right; }
+        .masthead .right b { color: var(--accent-orange); font-weight: 400; letter-spacing: 0.18em; }
+
+        /* ─────── Cover (hero opener) ─────── */
+        .cover {
+            padding: 96px 0 88px;
+            border-bottom: 1px solid var(--rule);
+        }
+        .cover-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+            gap: 64px;
+            align-items: end;
+        }
+        .cover .label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+            margin: 0 0 18px;
+        }
+        .cover .vol {
+            font-family: 'Fraunces', serif;
+            font-variation-settings: 'opsz' 144, 'wght' 280;
+            font-size: clamp(5rem, 13vw, 13rem);
+            line-height: 0.84;
+            letter-spacing: -0.045em;
+            color: var(--paper);
+            margin: 0 0 26px;
+        }
+        .cover .vol em {
+            font-style: italic;
+            font-weight: 300;
+            font-size: 0.32em;
+            color: var(--paper-muted);
+            letter-spacing: 0.04em;
+            transform: translateY(-1em);
+            display: inline-block;
+            padding-right: 0.18em;
+        }
+        .cover h1 {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-variation-settings: 'opsz' 96, 'wght' 380;
+            font-size: clamp(1.7rem, 3vw, 2.5rem);
+            line-height: 1.22;
+            color: var(--paper);
+            margin: 0;
+            letter-spacing: -0.005em;
+        }
+        .cover h1 em {
+            font-style: italic;
+            background: linear-gradient(110deg, var(--primary-blue), var(--accent-purple) 50%, var(--accent-orange));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 300;
+        }
+        .cover-meta {
+            border-left: 1px solid var(--rule);
+            padding-left: 32px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px 28px;
+            margin: 0;
+        }
+        .cover-meta > div { display: flex; flex-direction: column; gap: 8px; }
+        .cover-meta dt {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+            font-weight: 500;
+        }
+        .cover-meta dd {
+            margin: 0;
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-variation-settings: 'opsz' 36, 'wght' 400;
+            font-size: 1.25rem;
+            color: var(--paper);
+            letter-spacing: -0.005em;
+        }
+        .cover-meta dd .small {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            color: var(--paper-muted);
+            letter-spacing: 0.03em;
+        }
+
+        /* ─────── Section rule ─────── */
+        .section-rule {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 24px;
+            align-items: center;
+            padding: 80px 0 24px;
+        }
+        .section-rule .tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.36em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+            font-weight: 500;
+        }
+        .section-rule .tag b { color: var(--paper); font-weight: 500; }
+        .section-rule .line { height: 1px; background: var(--rule); }
+        .section-rule .meta {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 0.86rem;
+            color: var(--paper-muted);
+        }
+        .section-rule .meta b { color: var(--accent-orange); font-weight: 400; font-style: italic; }
+
+        /* ─────── Editor's note ─────── */
+        .editorial {
+            padding: 18px 0 32px;
+            display: grid;
+            grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+            gap: 56px;
+            align-items: start;
+        }
+        .editorial .body {
+            font-family: 'Noto Serif KR', 'Fraunces', serif;
+            font-weight: 300;
+            font-size: 1.05rem;
+            line-height: 2;
+            color: var(--ink);
+        }
+        .editorial .body .dropcap {
+            float: left;
+            font-family: 'Fraunces', serif;
+            font-variation-settings: 'opsz' 144, 'wght' 320;
+            font-size: 4.6rem;
+            line-height: 0.88;
+            color: var(--accent-orange);
+            margin: 0.05em 0.12em 0 0;
+            font-style: italic;
+        }
+        .editorial .sidebar {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            color: var(--paper-muted);
+            line-height: 1.9;
+            padding-left: 24px;
+            border-left: 1px solid var(--rule);
+        }
+        .editorial .sidebar p { margin: 0 0 14px; }
+        .editorial .sidebar strong {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--paper);
+            font-size: 0.95rem;
+        }
+        .editorial .sidebar .stat {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--rule-faint);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.74rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .editorial .sidebar .stat:last-of-type { border-bottom: none; }
+        .editorial .sidebar .stat .v {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--accent-orange);
+            font-size: 0.9rem;
+        }
+
+        /* ─────── Manifest of Pours ─────── */
+        .manifest {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 56px;
+            border-top: 1px solid var(--rule);
+        }
+        .manifest-item {
+            display: grid;
+            grid-template-columns: 56px 1fr auto;
+            gap: 20px;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--rule-faint);
+            align-items: baseline;
+        }
+        .manifest-item .num {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.4rem;
+            color: var(--accent-orange);
+            letter-spacing: 0;
+        }
+        .manifest-item .name {
+            font-family: 'Noto Serif KR', 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 0.98rem;
+            line-height: 1.5;
+            color: var(--paper);
+        }
+        .manifest-item .type {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+            white-space: nowrap;
+        }
+        .manifest-item.is-event {
+            opacity: 0.5;
+        }
+        .manifest-item.is-event .num {
+            color: var(--accent-purple);
+        }
+        .manifest-item.is-event .name { font-style: italic; }
+        .manifest-item.is-event .type::after {
+            content: " · event";
+            color: var(--accent-purple);
+        }
+        .manifest-note {
+            grid-column: 1 / -1;
+            padding: 24px 0 0;
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 0.95rem;
+            line-height: 1.85;
+            color: var(--paper-muted);
+            text-align: center;
+            border-top: 1px solid var(--rule-faint);
+            margin-top: 24px;
+        }
+        .manifest-note em {
+            color: var(--accent-orange);
+            font-style: italic;
+        }
+
+        /* ─────── Photo plates ─────── */
+        .plate {
+            display: grid;
+            gap: 16px;
+        }
+        .plate.bottle-grid {
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            grid-auto-flow: dense;
+        }
+        .plate.bottle-grid .pl-1 { grid-column: 1; grid-row: 1 / span 2; }
+        .plate.bottle-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.6s cubic-bezier(.2,.7,.2,1), filter 0.5s;
+            filter: saturate(0.92) brightness(0.96);
+            min-height: 220px;
+        }
+        .plate.bottle-grid .pl-1 img { min-height: 460px; }
+        .plate.bottle-grid img:hover {
+            transform: scale(1.02);
+            filter: saturate(1.05) brightness(1.02);
+        }
+        .plate-caption {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-style: italic;
+            font-size: 0.88rem;
+            color: var(--paper-muted);
+            text-align: center;
+            margin-top: 20px;
+        }
+        .plate-caption b {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            font-size: 0.7rem;
+            color: var(--accent-orange);
+            font-weight: 500;
+            font-style: normal;
+            margin-right: 14px;
+        }
+
+        .plate.party {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        .plate.party img {
+            width: 100%;
+            max-height: 720px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            filter: saturate(0.95);
+            transition: filter 0.5s, transform 0.6s cubic-bezier(.2,.7,.2,1);
+        }
+        .plate.party img:hover { filter: saturate(1.05); transform: scale(1.005); }
+
+        /* ─────── Charts ─────── */
+        .chart-wrap {
+            padding: 16px 0 0;
+        }
+        .chart-card {
+            background: rgba(232, 223, 201, 0.025);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            padding: 28px 24px 20px;
+            position: relative;
+        }
+        .chart-card::before {
+            content: "";
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 1px solid var(--rule-faint);
+            pointer-events: none;
+            border-radius: 2px;
+        }
+        .chart-card .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 28px;
+            margin-bottom: 24px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.74rem;
+            letter-spacing: 0.04em;
+            color: var(--paper-muted);
+        }
+        .chart-card .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chart-card .legend-item .swatch {
+            width: 14px; height: 14px;
+            border-radius: 2px;
+        }
+        .chart-wrap .container-h {
+            position: relative;
+            height: 480px;
+            width: 100%;
+        }
+        .chart-wrap .container-h.small {
+            height: 320px;
+        }
+
+        /* Findings row */
+        .findings-row {
+            display: grid;
+            grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+            gap: 56px;
+            padding-top: 32px;
+            align-items: start;
+        }
+        .findings-text {
+            font-family: 'Noto Serif KR', 'Fraunces', serif;
+            font-weight: 300;
+            font-size: 1.02rem;
+            line-height: 2.05;
+            color: var(--ink);
+        }
+        .findings-text p { margin: 0 0 20px; }
+        .findings-text p:last-child { margin: 0; }
+        .findings-text .pull {
+            display: block;
+            margin: 28px 0;
+            padding: 20px 28px;
+            border-left: 3px solid var(--accent-orange);
+            background: rgba(251, 191, 36, 0.04);
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.12rem;
+            line-height: 1.7;
+            color: var(--paper);
+        }
+        .findings-text .pull::before {
+            content: "“";
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            color: var(--accent-orange);
+            font-size: 2.2rem;
+            line-height: 0;
+            position: relative;
+            top: 0.3em;
+            margin-right: 4px;
+        }
+
+        /* ─────── Rank lists ─────── */
+        .ranks-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            padding-top: 20px;
+        }
+        .ranks-grid.cols-2 {
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .rank-card {
+            background: rgba(232, 223, 201, 0.025);
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            padding: 28px 28px 18px;
+            position: relative;
+        }
+        .rank-card::before {
+            content: "";
+            position: absolute;
+            top: 6px; left: 6px; right: 6px; bottom: 6px;
+            border: 1px solid var(--rule-faint);
+            pointer-events: none;
+            border-radius: 2px;
+        }
+        .rank-card .head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--rule);
+            position: relative;
+        }
+        .rank-card .head .title {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-variation-settings: 'opsz' 72, 'wght' 400;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--paper);
+            letter-spacing: -0.005em;
+        }
+        .rank-card .head .count {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+        }
+        .rank-card.gen-blue .head .title { color: var(--primary-blue); }
+        .rank-card.gen-purple .head .title { color: var(--accent-purple); }
+        .rank-card.gen-orange .head .title { color: var(--accent-orange); }
+
+        .rank-list { list-style: none; padding: 0; margin: 0; position: relative; }
+        .rank-row {
+            display: grid;
+            grid-template-columns: 28px 1fr auto;
+            gap: 14px;
+            align-items: baseline;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--rule-faint);
+        }
+        .rank-row:last-child { border-bottom: none; }
+        .rank-row .num {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.2rem;
+            color: var(--accent-orange);
+        }
+        .rank-row .info { min-width: 0; }
+        .rank-row .name {
+            display: block;
+            font-family: 'Noto Serif KR', 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: var(--paper);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .rank-row .type {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+        }
+        .rank-row .score {
+            font-family: 'Fraunces', serif;
+            font-variation-settings: 'opsz' 60, 'wght' 400;
+            font-size: 1.2rem;
+            color: var(--paper);
+        }
+
+        /* ─────── Farewell ─────── */
+        .farewell {
+            display: grid;
+            grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
+            gap: 64px;
+            padding: 32px 0 24px;
+            align-items: center;
+        }
+        .host-text {
+            font-family: 'Noto Serif KR', 'Fraunces', serif;
+            font-weight: 300;
+            line-height: 2.1;
+            color: var(--ink);
+            font-size: 1rem;
+        }
+        .host-text p {
+            margin: 0 0 8px;
+            opacity: 0;
+            transform: translateX(-22px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .host-text p.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .host-text .quoted { font-style: italic; color: var(--paper); }
+        .host-text .lead {
+            font-weight: 400;
+            color: var(--paper-muted);
+            margin-bottom: 20px;
+        }
+        .host-text .closing {
+            margin-top: 20px;
+            color: var(--paper-muted);
+        }
+        .host-text .sign {
+            margin-top: 24px;
+            text-align: center;
+            font-style: italic;
+            color: var(--accent-orange);
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-size: 1rem;
+        }
+        .host-image {
+            position: relative;
+        }
+        .host-image img {
+            width: 100%;
+            border-radius: 4px;
+            filter: saturate(0.92) brightness(0.95);
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 1s ease-out, transform 1s cubic-bezier(.2,.7,.2,1);
+        }
+        .host-image img.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ─────── Colophon ─────── */
+        .colophon {
+            margin-top: 88px;
+            padding: 32px 0 48px;
+            border-top: 1px solid var(--rule);
+        }
+        .colophon .inner {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 24px;
+            align-items: end;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+        }
+        .colophon .center {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            text-transform: none;
+            color: var(--paper);
+        }
+        .colophon .center .orn { color: var(--accent-orange); padding: 0 12px; }
+        .colophon .right { text-align: right; }
+        .colophon a { color: var(--paper-muted); text-decoration: none; transition: color 0.3s; }
+        .colophon a:hover { color: var(--accent-orange); }
+
+        /* ─────── Lightbox ─────── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 11, 11, 0.96);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 92vh;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 24px; right: 24px;
+            width: 44px; height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--paper);
+            font-family: 'Fraunces', serif;
+            font-size: 1.6rem;
+            cursor: pointer;
+            border: 1px solid var(--rule);
+            border-radius: 50%;
+            background: rgba(232, 223, 201, 0.04);
+            transition: all 0.3s;
+        }
+        .lightbox-close:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+
+        /* ─────── Reveal ─────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+        }
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-stagger > * {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1);
+        }
+        .reveal-stagger.in > * { opacity: 1; transform: translateY(0); }
+        .reveal-stagger.in > *:nth-child(1) { transition-delay: 0.05s; }
+        .reveal-stagger.in > *:nth-child(2) { transition-delay: 0.12s; }
+        .reveal-stagger.in > *:nth-child(3) { transition-delay: 0.20s; }
+        .reveal-stagger.in > *:nth-child(4) { transition-delay: 0.28s; }
+        .reveal-stagger.in > *:nth-child(5) { transition-delay: 0.36s; }
+        .reveal-stagger.in > *:nth-child(6) { transition-delay: 0.44s; }
+        .reveal-stagger.in > *:nth-child(n+7) { transition-delay: 0.52s; }
+
+        /* ─────── Responsive ─────── */
+        @media (max-width: 1100px) {
+            .container { padding: 0 36px; }
+            .cover-grid, .editorial, .findings-row, .farewell {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+            .cover-meta { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 28px; }
+            .editorial .sidebar { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 28px; }
+        }
+        @media (max-width: 900px) {
+            .container { padding: 0 22px; }
+            .masthead .inner {
+                grid-template-columns: 1fr;
+                text-align: left;
+                gap: 6px;
+                font-size: 0.64rem;
+                letter-spacing: 0.22em;
+            }
+            .masthead .center, .masthead .right { text-align: left; }
+
+            .cover { padding: 56px 0 48px; }
+            .cover .vol { font-size: clamp(4.5rem, 22vw, 8rem); }
+
+            .section-rule { padding: 56px 0 18px; }
+            .section-rule .meta { display: none; }
+
+            .manifest { grid-template-columns: 1fr; gap: 0; }
+
+            .plate.bottle-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+            .plate.bottle-grid .pl-1 { grid-column: 1 / -1; grid-row: auto; }
+            .plate.bottle-grid img { min-height: 200px; }
+            .plate.bottle-grid .pl-1 img { min-height: 300px; }
+
+            .chart-wrap .container-h { height: 380px; }
+            .chart-wrap .container-h.small { height: 260px; }
+
+            .ranks-grid, .ranks-grid.cols-2 { grid-template-columns: 1fr; gap: 18px; }
+
+            .colophon .inner { grid-template-columns: 1fr; gap: 12px; text-align: left; }
+            .colophon .center, .colophon .right { text-align: left; }
+
+            .editorial .body .dropcap { font-size: 3.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="container">
+                <div class="inner">
+                    <div class="left"><a href="../">← The Archive</a></div>
+                    <div class="center">Sooltluck <span class="glyph">⁂</span> Party</div>
+                    <div class="right">Volume <b>N° 03</b></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Cover / Hero -->
+        <section class="cover">
+            <div class="container">
+                <div class="cover-grid">
+                    <div>
+                        <p class="label reveal">Volume Three · Tasting Notes</p>
+                        <p class="vol reveal"><em>№</em>03</p>
+                        <h1 class="reveal">
+                            늦가을의 강남, 서른세 병과<br>
+                            <em>열일곱 입의 판결.</em>
+                        </h1>
+                    </div>
+                    <dl class="cover-meta reveal-stagger">
+                        <div>
+                            <dt>Date</dt>
+                            <dd>2025.11.22 <span class="small">Sat · 18:30</span></dd>
+                        </div>
+                        <div>
+                            <dt>Venue</dt>
+                            <dd>서울 강남 <span class="small">세모네모</span></dd>
+                        </div>
+                        <div>
+                            <dt>Tasters</dt>
+                            <dd>17 <span class="small">of 18 guests</span></dd>
+                        </div>
+                        <div>
+                            <dt>Pours</dt>
+                            <dd>29 <span class="small">+ 4 event pours</span></dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <!-- Editor's Note -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>I.</b> &nbsp;Editor's Note &nbsp;/&nbsp; 도입</span>
+                <span class="line"></span>
+                <span class="meta">on <b>the evening</b> of November 22</span>
+            </div>
+            <section class="editorial reveal-stagger">
+                <div class="body">
+                    <p>
+                        <span class="dropcap">2</span>025년 11월 22일, 오후 6시 30분. 서울 강남역 인근의 세모네모에서
+                        세 번째 술트럭파티가 열렸습니다. 호스트를 포함하여 18명의 참여자가 모였고,
+                        시음 진행자를 제외한 17명이 평가에 참여했습니다. 참여자가 직접 가져온
+                        주류는 중복을 제외해 총 33종이었으며, 이 중 1번부터 29번까지를 점수로
+                        평가하고 30~33번은 이벤트 형식으로 시음했습니다.
+                    </p>
+                    <p>
+                        점수는 0점부터 5점 사이에서 매겼습니다. 같은 술이 의도치 않게 두 번 시음되는
+                        일도 있었는데(9번과 18번), 이는 같은 입맛이 같은 술에 어떻게 다른 점수를
+                        매기는지 들여다볼 수 있는 작은 단서가 되었습니다.
+                    </p>
+                </div>
+                <aside class="sidebar">
+                    <p><strong>At a Glance</strong></p>
+                    <div class="stat"><span>Bottles</span><span class="v">33</span></div>
+                    <div class="stat"><span>Evaluated</span><span class="v">29</span></div>
+                    <div class="stat"><span>Tasters</span><span class="v">17</span></div>
+                    <div class="stat"><span>Top score</span><span class="v">3.95</span></div>
+                    <div class="stat"><span>Mean</span><span class="v">3.18</span></div>
+                </aside>
+            </section>
+        </div>
+
+        <!-- Manifest -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>II.</b> &nbsp;Manifest of Pours &nbsp;/&nbsp; 시음 주류 목록</span>
+                <span class="line"></span>
+                <span class="meta"><b>33</b> bottles · 29 evaluated</span>
+            </div>
+            <div class="manifest reveal-stagger">
+                <!-- left column 1-17 -->
+                <div class="manifest-item"><span class="num">01</span><span class="name">퓨엔테비나 FUENTEVINA</span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">02</span><span class="name">ROSA REGALE BRACHETTO D'ACQUI 2023</span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">03</span><span class="name">페어히즈 앵커 리제르바, 2022</span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">04</span><span class="name">젬마 디 루나 모스카토</span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">05</span><span class="name">石库门 9년 (上海老酒)</span><span class="type">황주</span></div>
+                <div class="manifest-item"><span class="num">06</span><span class="name">Fedora Kölsch</span><span class="type">맥주</span></div>
+                <div class="manifest-item"><span class="num">07</span><span class="name">MOSCATO D'ASTI 2024</span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">08</span><span class="name">처음술 한산 소곡주</span><span class="type">약주</span></div>
+                <div class="manifest-item"><span class="num">09</span><span class="name">Louis Perdrier Brut Excellence</span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">10</span><span class="name">호랑이 유자 막걸리</span><span class="type">막걸리</span></div>
+                <div class="manifest-item"><span class="num">11</span><span class="name">SWEET ROSE VINO FRIZZANTE</span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">12</span><span class="name">금색년화 5년</span><span class="type">황주</span></div>
+                <div class="manifest-item"><span class="num">13</span><span class="name">아라고시 유즈 あらごし ゆず</span><span class="type">사케</span></div>
+                <div class="manifest-item"><span class="num">14</span><span class="name">서울효모방 온섶 (제 5안, 25/26 W/S)</span><span class="type">막걸리</span></div>
+                <div class="manifest-item"><span class="num">15</span><span class="name">감탄주 (과하주 스타일)</span><span class="type">약주</span></div>
+                <div class="manifest-item"><span class="num">16</span><span class="name">허니비 와인</span><span class="type">미드</span></div>
+                <div class="manifest-item"><span class="num">17</span><span class="name">BRICCO QUAGLIA MOSCATO D'ASTI 2022</span><span class="type">와인</span></div>
+                <!-- right column 18-33 -->
+                <div class="manifest-item"><span class="num">18</span><span class="name">Louis Perdrier Brut Excellence <em>(9번과 동일)</em></span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">19</span><span class="name">PORTO VALDOURO TAWNY PORT</span><span class="type">와인</span></div>
+                <div class="manifest-item"><span class="num">20</span><span class="name">코아베스트 사워보쉐</span><span class="type">미드</span></div>
+                <div class="manifest-item"><span class="num">21</span><span class="name">복분자주 (비매품)</span><span class="type">리큐르</span></div>
+                <div class="manifest-item"><span class="num">22</span><span class="name">삭 SAK 블랙 50</span><span class="type">증류주</span></div>
+                <div class="manifest-item"><span class="num">23</span><span class="name">스이게이 토쿠베츠 준마이 (Drunken Whale)</span><span class="type">사케</span></div>
+                <div class="manifest-item"><span class="num">24</span><span class="name">THE GLENLEE 블렌디드 스카치 BATCH NO:2</span><span class="type">위스키</span></div>
+                <div class="manifest-item"><span class="num">25</span><span class="name">Laproaig Quater Cask</span><span class="type">위스키</span></div>
+                <div class="manifest-item"><span class="num">26</span><span class="name">Ardbeg Corryvreckan</span><span class="type">위스키</span></div>
+                <div class="manifest-item"><span class="num">27</span><span class="name">백제소주, 술 익는 집 에디션</span><span class="type">소주</span></div>
+                <div class="manifest-item"><span class="num">28</span><span class="name">DAIYAME Hamada Syuzou (고구마 소주)</span><span class="type">일본 소주</span></div>
+                <div class="manifest-item"><span class="num">29</span><span class="name">필리핀 위스키, 오크 캐스크</span><span class="type">위스키</span></div>
+                <div class="manifest-item is-event"><span class="num">30</span><span class="name">서울고량주 레드</span><span class="type">백주</span></div>
+                <div class="manifest-item is-event"><span class="num">31</span><span class="name">KARIYA 75 브루잉 (Strawberry Fruit 세종 외)</span><span class="type">맥주</span></div>
+                <div class="manifest-item is-event"><span class="num">32</span><span class="name">한국고량주 극락 75도</span><span class="type">백주</span></div>
+                <div class="manifest-item is-event"><span class="num">33</span><span class="name">강소백 리큐르 (복숭아·유자·포도)</span><span class="type">리큐르</span></div>
+
+                <p class="manifest-note">
+                    1–29번을 0–5점으로 평가했고, 30–33번은 <em>이벤트 형식</em>으로 시음했습니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- Plate I — Bottle gallery -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>Plate I.</b> &nbsp;The Bottles &nbsp;/&nbsp; 보틀</span>
+                <span class="line"></span>
+                <span class="meta">photographs by <b>the guests</b></span>
+            </div>
+            <div class="plate bottle-grid reveal-stagger">
+                <div class="pl-1"><img src="img_bottle3.jpeg" alt="시음 주류 사진 3"></div>
+                <img src="img_bottle1.jpeg" alt="시음 주류 사진 1">
+                <img src="img_bottle2.jpeg" alt="시음 주류 사진 2">
+                <img src="img_bottle4.jpeg" alt="시음 주류 사진 4">
+                <img src="img_bottle5.jpeg" alt="시음 주류 사진 5">
+            </div>
+            <p class="plate-caption"><b>fig. 1</b> 참여자들이 촬영한 시음 주류 사진</p>
+        </div>
+
+        <!-- The Verdict -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>III.</b> &nbsp;The Verdict &nbsp;/&nbsp; 전체 평결</span>
+                <span class="line"></span>
+                <span class="meta">averaged across <b>17 tasters</b></span>
+            </div>
+            <div class="chart-wrap reveal">
+                <div class="chart-card">
+                    <div class="legend">
+                        <span class="legend-item"><span class="swatch" style="background: #3B82F6;"></span>전통주</span>
+                        <span class="legend-item"><span class="swatch" style="background: #F59E0B;"></span>위스키</span>
+                        <span class="legend-item"><span class="swatch" style="background: #8B5CF6;"></span>와인</span>
+                        <span class="legend-item"><span class="swatch" style="background: #14B8A6;"></span>기타</span>
+                    </div>
+                    <div class="container-h"><canvas id="rankingChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Findings -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>IV.</b> &nbsp;By Category &amp; Findings &nbsp;/&nbsp; 주종·논평</span>
+                <span class="line"></span>
+                <span class="meta">notes from <b>the editor</b></span>
+            </div>
+            <div class="findings-row reveal-stagger">
+                <div class="findings-text">
+                    <p>
+                        시음은 저도수 주류부터 시작해서 고도수 주류 순서로 진행되었습니다.
+                        시음 1위는 <em>Ardbeg Corryvreckan</em>으로 3.95점, 저도수 부분에서는
+                        BRICCO QUAGLIA MOSCATO D'ASTI가 3.86점으로 1위에 올랐습니다.
+                        반면 중국 전통주인 황주 두 종과 한산 소곡주는 2점에 미치지 못하며
+                        낯섦이 점수에 그대로 반영되었습니다.
+                    </p>
+                    <span class="pull">
+                        술트럭파티를 참여할 정도로 술을 좋아하는 분들은
+                        <strong>위스키를 좋아하는 성향</strong>이 있었습니다.”
+                    </span>
+                    <p>
+                        모든 위스키가 평균 이상의 점수를 받았고, 전통주와 와인은 비교적
+                        편차가 있었습니다. 의도치 않게 두 번 시음된 Louis Perdrier Brut
+                        Excellence는 9번 3.02점, 18번 3.27점으로 비슷한 결을 보였습니다.
+                    </p>
+                </div>
+                <div class="chart-wrap" style="padding-top: 0;">
+                    <div class="chart-card">
+                        <div class="container-h small"><canvas id="categoryChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plate II — Party photos -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>Plate II.</b> &nbsp;The Evening &nbsp;/&nbsp; 현장</span>
+                <span class="line"></span>
+                <span class="meta">at <b>세모네모</b>, Gangnam</span>
+            </div>
+            <div class="plate party reveal-stagger">
+                <img src="img_all1.jpg" alt="술트럭파티 현장 사진 1">
+                <img src="img_all2.jpg" alt="술트럭파티 현장 사진 2">
+                <img src="img_all3.jpg" alt="술트럭파티 현장 사진 3">
+            </div>
+        </div>
+
+        <!-- By Age -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>V.</b> &nbsp;By the Years &nbsp;/&nbsp; 연령대별 Top 5</span>
+                <span class="line"></span>
+                <span class="meta">rankings within <b>each cohort</b></span>
+            </div>
+            <p class="manifest-note" style="border-top: none; padding-top: 0; margin-top: 0; margin-bottom: 12px; text-align: left;">
+                각 연령대 참여자의 평가만으로 산출했습니다. 전체 평균과는 다를 수 있습니다.
+            </p>
+            <div class="ranks-grid reveal-stagger">
+                <div class="rank-card gen-blue">
+                    <div class="head"><span class="title">20s의 선택</span><span class="count" id="count20s"></span></div>
+                    <ul class="rank-list" id="top20s"></ul>
+                </div>
+                <div class="rank-card gen-purple">
+                    <div class="head"><span class="title">30s의 선택</span><span class="count" id="count30s"></span></div>
+                    <ul class="rank-list" id="top30s"></ul>
+                </div>
+                <div class="rank-card gen-orange">
+                    <div class="head"><span class="title">40s의 선택</span><span class="count" id="count40s"></span></div>
+                    <ul class="rank-list" id="top40s"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- By Gender -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>VI.</b> &nbsp;By the Gentry &nbsp;/&nbsp; 성별 Top 5</span>
+                <span class="line"></span>
+                <span class="meta"><b>gentlemen's</b> &amp; <b>ladies'</b> picks</span>
+            </div>
+            <div class="ranks-grid cols-2 reveal-stagger">
+                <div class="rank-card gen-blue">
+                    <div class="head"><span class="title">Gentlemen's Pick</span><span class="count" id="countMale"></span></div>
+                    <ul class="rank-list" id="topMale"></ul>
+                </div>
+                <div class="rank-card gen-purple">
+                    <div class="head"><span class="title">Ladies' Pick</span><span class="count" id="countFemale"></span></div>
+                    <ul class="rank-list" id="topFemale"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Farewell -->
+        <div class="container">
+            <div class="section-rule reveal">
+                <span class="tag"><b>VII.</b> &nbsp;Host's Farewell &nbsp;/&nbsp; 호스트 인사</span>
+                <span class="line"></span>
+                <span class="meta">— closing the volume</span>
+            </div>
+            <section class="farewell">
+                <div class="host-text">
+                    <p class="lead">참여자 여러분 덕분에 파티가 한층 더 풍성해졌습니다.</p>
+                    <p class="quoted">“진행 전에 호스트와 함께 파티를 준비해주신 분”</p>
+                    <p class="quoted">“술트럭파티를 다시 찾아와 주신 분”</p>
+                    <p class="quoted">“예쁜 인증샷을 위해 참가용 술을 감각적으로 배치해주신 분”</p>
+                    <p class="quoted">“참가용 술에 얽힌 인상적인 스토리를 들려주신 분”</p>
+                    <p class="quoted">“쉽게 구할 수 없는 귀한 술을 가져와 주신 분”</p>
+                    <p class="quoted">“꼼꼼하게 시음 평가를 남겨주신 분”</p>
+                    <p class="quoted">“뒷풀이까지 텐션 높게 즐겨주신 분”</p>
+                    <p class="closing">
+                        모두가 호스트를 도와주시고 함께 즐겨주신 덕분에<br>
+                        이번 파티를 열길 잘했다는 생각이 들었습니다.<br>
+                        2026년에도 또 한 번 술트럭 파티를 열고 싶어지네요.
+                    </p>
+                    <p class="closing">
+                        어느덧 2025년도 한 달 정도만 남았네요.<br>
+                        건강하고 기분 좋은 한 잔과 함께 한 해 잘 마무리하시길 바랍니다. 감사합니다.
+                    </p>
+                    <p class="sign">— 호스트 이지원, 손종국 —</p>
+                </div>
+                <div class="host-image">
+                    <img src="img_host.jpg" alt="호스트 사진">
+                </div>
+            </section>
+        </div>
+
+        <!-- Colophon -->
+        <footer class="colophon">
+            <div class="container">
+                <div class="inner">
+                    <div class="left">Curated &nbsp;·&nbsp; Jongkook &amp; Jiwon</div>
+                    <div class="center">Vol.<span class="orn">∽</span>03 <span class="orn">·</span> The Pour Archive</div>
+                    <div class="right"><a href="../">Return to the Archive →</a></div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">×</span>
+        <img id="lightbox-img" alt="">
+    </div>
+
+    <script>
+        // ─── Raw CSV ───
+        const csvData = `
+,,,,,,,,,,,,,,,,,,,,
+,,,,나이대,30대,20대,30대,20대,20대,20대,20대,40대,40대,20대,30대,30대,40대,20대,30대,20대,30대,
+,,,,성별,남,남,남,여,여,남,여,남,남,여,남,여,남,여,남,남,남,
+,전통주,주종,주류 이름,No,김헌진,이현우,양상우,김나정,최수빈,최윤한,이정민,박성규,이장군,최지원,김범준,왕소정,박정현,이지원,강태우,김진욱,이은상,평균
+,,와인,퓨엔테비나 FUENTEVINA,1,2,,2,2,2,2,3,2,3,2.8,3,3,4,3,4,3,3,2.74
+,,와인,ROSA REGALE BRACHETTO D'ACQUI 2023,2,3,,3,5,4,3.5,3,3,3,2.8,3,1,2,4,4,3,2,3.08
+,,와인,"페어히즈 앵커 리제르바, 2022",3,3,,2,4,4,3.5,4,3,3.5,3,2,3,5,5,2.5,4,3,3.41
+,,와인,"젬마 디 루나 모스카토, 모스카토",4,1,4,3,5,5,4.5,5,3.5,3,3.2,4,1,2,3,5,3,2,3.36
+,,황주,"石库门 9년, Shanghai Shikumen (上海老酒)",5,1,2.5,2,0,1,2,1,3,2,1.5,2,2.5,4,3,2,2,2,1.97
+,,맥주,Fedora Kölsch,6,3,3,2,3,5,3.8,4,4.5,3.5,3.8,5,3,5,4,4,3,3.5,3.71
+,,와인,MOSCATO D'ASTI 2024,7,2,4.5,2,5,5,4.2,2,1,3,3.2,4,4,1,4,5,3,2,3.23
+,O,약주,처음술 한산 소곡주,8,2,3.5,2,0,0,1,1,2,2.5,2,2,2.5,1,3,3,2,3,1.91
+,,와인,Louis Perdrier Brut Excellence,9,3,3.5,3,3,2,4,4,3,,3.3,3,1,3,4,3.5,3,2,3.02
+,O,막걸리,호랑이 유자 막걸리,10,3,4.7,4,5,1,4.7,2,3.5,4,3.5,4,1,2,3,5,3,,3.34
+,,와인,SWEET ROSE VINO FRIZZANTE,11,2,4,3,5,4,4.5,4,3,3.5,3.5,3,1,3,3,4,3,2.5,3.29
+,,황주,금색년화 5년,12,1,2.5,2,0,5,1,1,1.5,2,2,2,1,2,2,2,2,,1.81
+,,사케,아라고시 유즈 あらごし ゆず,13,3,4.2,4,5,0,4.8,5,4.5,2.5,3.2,3,2,4,5,4,4,3.5,3.63
+,O,막걸리,"서울효모방 온섶 (제 5안, 25/26 W/S)",14,2,4.5,3,4,0,2,3,,2,2,2,3,4,4,3,3,3.5,2.81
+,O,약주,"감탄주 (기타주류, 과하주 스타일)",15,1,2.7,2,4,5,4,3,4,3,2.8,4,3.5,4,2,5,3,3.5,3.32
+,O,미드,허니비 와인,16,2,4.4,4,5,,4,4,4,4,3.8,4,3,5,4,3,3,3,3.76
+,,와인,BRICCO QUAGLIA MOSCATO D'ASTI 2022,17,3,4,4.5,5,,4.2,5,5,4.5,3.5,4,3,4,4,3,3,2,3.86
+,,와인,Louis Perdrier Brut Excellence (9번과 동일),18,2,3.8,3,3,,3,3,4.5,3,3.8,2,1,5,4,4,4,,3.27
+,,와인,PORTO VALDOURO TAWNY PORT,19,1,3.2,3,1,,3,3,3,3.5,3.7,3,3,2,4,4,3,3,2.90
+,O,미드,코아베스트 사워보쉐,20,2,3.7,3,3,,4.4,3,3.5,4,4,3,4,4,5,4,3,4,3.60
+,,리큐르,복분자주 (비매품),21,1,3.5,2,4,,2.5,5,4,,3.5,4,3,4,4,5,3,4.5,3.53
+,O,증류주,삭 SAK 블랙 50,22,1,3.7,2,,,3,2,4,2.5,3.5,3,2,3,3,5,4,4.5,3.08
+,,사케,스이게이 토쿠베츠 준마이 (Drunken Whale),23,2,3.9,2,,,3.2,3,,3.5,,3,1.5,5,3,4.5,3,4.5,3.24
+,,위스키,THE GLENLEE 블렌디드 스카치 위스키 BATCH NO:2,24,3,4.2,4,,,1.8,2,4,4,3.2,3,2,4,4,4,4,4.5,3.45
+,,위스키,Laproaig Quater cask,25,3,4.7,5,,,4.5,3,4,3.5,,3,3,3,3,3.5,4,3,3.59
+,,위스키,Ardbeg Corryvreckan,26,3,4.5,4.5,,,5,5,3,5,4.3,4,4,3,3.5,3.5,4,3,3.95
+,O,소주,"백제소주, 술 익는 집 에디션",27,1,2.4,3,,,2.9,4,2,2.5,,3,0,4,4,5,4,3.5,2.95
+,,일본 소주,DAIYAME Hamada Syuzou (고구마 소주),28,2,2.8,3,1,,3,4,3.5,3,,3,3,3,4,3,3,3.5,2.99
+,,위스키,"필리핀 위스키, 오크 캐스크",29,2,4.7,3,2,,3.4,4,,,3.6,3,4,4,4.5,4,4,2,3.44
+,,,,,2.07,3.73,2.93,3.22,2.87,3.36,3.28,3.31,3.21,3.18,3.14,2.38,3.41,3.66,3.84,3.21,3.10,3.18
+`;
+
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n');
+            const ages = lines[1].split(',').slice(5, 22);
+            const genders = lines[2].split(',').slice(5, 22);
+            const liquors = [];
+            for (let i = 4; i < lines.length; i++) {
+                const line = lines[i];
+                if (!line.trim() || line.startsWith(',,,,,')) continue;
+                const parts = [];
+                let current = '';
+                let inQuote = false;
+                for (let char of line) {
+                    if (char === '"') inQuote = !inQuote;
+                    else if (char === ',' && !inQuote) { parts.push(current); current = ''; }
+                    else current += char;
+                }
+                parts.push(current);
+                const clean = parts.map(p => p.trim().replace(/^"|"$/g, ''));
+                const isTraditional = clean[1] === 'O';
+                const type = clean[2];
+                const name = clean[3];
+                const scores = clean.slice(5, 22).map(s => s === '' ? null : parseFloat(s));
+                const valid = scores.filter(s => s !== null);
+                const average = valid.reduce((a, b) => a + b, 0) / valid.length;
+                liquors.push({ isTraditional, type, name, scores, average });
+            }
+            return { ages, genders, liquors };
+        }
+
+        const data = parseCSV(csvData);
+        const sortedByAvg = [...data.liquors].sort((a, b) => b.average - a.average);
+
+        function getCategoryAvg(filterFn) {
+            const filtered = data.liquors.filter(filterFn);
+            if (!filtered.length) return 0;
+            return filtered.reduce((a, c) => a + c.average, 0) / filtered.length;
+        }
+        const avgTraditional = getCategoryAvg(l => l.isTraditional);
+        const avgWhisky = getCategoryAvg(l => l.type.includes('위스키'));
+        const avgWine = getCategoryAvg(l => l.type.includes('와인'));
+        const avgOverall = getCategoryAvg(() => true);
+
+        function getTop5By(filter) {
+            return data.liquors.map(l => {
+                const rel = l.scores.filter((_, i) => filter(i));
+                const valid = rel.filter(s => s !== null);
+                const avg = valid.length ? valid.reduce((a, b) => a + b, 0) / valid.length : -1;
+                return { ...l, specificAvg: avg };
+            }).sort((a, b) => b.specificAvg - a.specificAvg).slice(0, 5);
+        }
+        const top20s = getTop5By(i => data.ages[i] === '20대');
+        const top30s = getTop5By(i => data.ages[i] === '30대');
+        const top40s = getTop5By(i => data.ages[i] === '40대');
+        const topMale = getTop5By(i => data.genders[i] === '남');
+        const topFemale = getTop5By(i => data.genders[i] === '여');
+
+        const count20s = data.ages.filter(a => a === '20대').length;
+        const count30s = data.ages.filter(a => a === '30대').length;
+        const count40s = data.ages.filter(a => a === '40대').length;
+        const countMale = data.genders.filter(g => g === '남').length;
+        const countFemale = data.genders.filter(g => g === '여').length;
+
+        // ─── Chart.js global defaults ───
+        Chart.defaults.color = '#8B826B';
+        Chart.defaults.font.family = "'Outfit', sans-serif";
+        Chart.defaults.borderColor = 'rgba(232, 223, 201, 0.1)';
+
+        function colorFor(l, alpha) {
+            const a = alpha != null ? alpha : 0.78;
+            if (l.type.includes('위스키')) return `rgba(245, 158, 11, ${a})`;
+            if (l.type.includes('와인')) return `rgba(139, 92, 246, ${a})`;
+            if (l.isTraditional) return `rgba(59, 130, 246, ${a})`;
+            return `rgba(20, 184, 166, ${a})`;
+        }
+        function borderColorFor(l) {
+            if (l.type.includes('위스키')) return '#F59E0B';
+            if (l.type.includes('와인')) return '#8B5CF6';
+            if (l.isTraditional) return '#3B82F6';
+            return '#14B8A6';
+        }
+
+        new Chart(document.getElementById('rankingChart'), {
+            data: {
+                labels: sortedByAvg.map(l => l.name.length > 14 ? l.name.substring(0, 14) + '…' : l.name),
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: '평균 점수',
+                        data: sortedByAvg.map(l => l.average),
+                        backgroundColor: sortedByAvg.map(l => colorFor(l)),
+                        borderColor: sortedByAvg.map(l => borderColorFor(l)),
+                        borderWidth: 1,
+                        borderRadius: 2,
+                        order: 2
+                    },
+                    {
+                        type: 'line',
+                        label: `평균선 (${avgOverall.toFixed(2)})`,
+                        data: Array(sortedByAvg.length).fill(avgOverall),
+                        borderColor: '#E8DFC9',
+                        borderWidth: 1.5,
+                        borderDash: [4, 6],
+                        pointRadius: 0,
+                        fill: false,
+                        order: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, labels: { color: '#8B826B', font: { size: 11 } } },
+                    tooltip: {
+                        backgroundColor: '#1C1C1C',
+                        titleColor: '#E8DFC9',
+                        bodyColor: '#E8DFC9',
+                        borderColor: 'rgba(232, 223, 201, 0.2)',
+                        borderWidth: 1,
+                        padding: 12,
+                        titleFont: { family: "'Fraunces', serif", size: 13, style: 'italic' },
+                        callbacks: {
+                            title: ctx => sortedByAvg[ctx[0].dataIndex].name,
+                            label: ctx => `${ctx.dataset.label}: ${ctx.raw.toFixed(2)} / 5.0`
+                        }
+                    }
+                },
+                scales: {
+                    y: { min: 1.0, max: 4.5, grid: { color: 'rgba(232,223,201,0.06)' } },
+                    x: { grid: { display: false }, ticks: { color: '#8B826B', font: { size: 9 } } }
+                }
+            }
+        });
+
+        const cTrad = data.liquors.filter(l => l.isTraditional).length;
+        const cWhi = data.liquors.filter(l => l.type.includes('위스키')).length;
+        const cWine = data.liquors.filter(l => l.type.includes('와인')).length;
+
+        new Chart(document.getElementById('categoryChart'), {
+            data: {
+                labels: [`전통주 (${cTrad})`, `위스키 (${cWhi})`, `와인 (${cWine})`],
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: '평균',
+                        data: [avgTraditional, avgWhisky, avgWine],
+                        backgroundColor: ['rgba(59,130,246,0.78)', 'rgba(245,158,11,0.78)', 'rgba(139,92,246,0.78)'],
+                        borderColor: ['#3B82F6', '#F59E0B', '#8B5CF6'],
+                        borderWidth: 1,
+                        borderRadius: 2,
+                        order: 2
+                    },
+                    {
+                        type: 'line',
+                        label: `전체 평균 (${avgOverall.toFixed(2)})`,
+                        data: [avgOverall, avgOverall, avgOverall],
+                        borderColor: '#E8DFC9',
+                        borderWidth: 1.5,
+                        borderDash: [4, 6],
+                        pointRadius: 0,
+                        fill: false,
+                        order: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, labels: { color: '#8B826B', font: { size: 11 } } },
+                    tooltip: {
+                        backgroundColor: '#1C1C1C',
+                        titleColor: '#E8DFC9',
+                        bodyColor: '#E8DFC9',
+                        borderColor: 'rgba(232, 223, 201, 0.2)',
+                        borderWidth: 1,
+                        padding: 12,
+                        callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw.toFixed(2)} / 5.0` }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 5, grid: { color: 'rgba(232,223,201,0.06)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ─── Render rank lists ───
+        function renderList(elId, items) {
+            const el = document.getElementById(elId);
+            items.forEach((item, idx) => {
+                const li = document.createElement('li');
+                li.className = 'rank-row';
+                li.innerHTML = `
+                    <span class="num">${String(idx + 1).padStart(2, '0')}</span>
+                    <span class="info">
+                        <span class="name">${item.name}</span>
+                        <span class="type">${item.type}</span>
+                    </span>
+                    <span class="score">${item.specificAvg.toFixed(2)}</span>
+                `;
+                el.appendChild(li);
+            });
+        }
+        renderList('top20s', top20s);
+        renderList('top30s', top30s);
+        renderList('top40s', top40s);
+        renderList('topMale', topMale);
+        renderList('topFemale', topFemale);
+
+        document.getElementById('count20s').textContent = `${count20s} voices`;
+        document.getElementById('count30s').textContent = `${count30s} voices`;
+        document.getElementById('count40s').textContent = `${count40s} voices`;
+        document.getElementById('countMale').textContent = `${countMale} voices`;
+        document.getElementById('countFemale').textContent = `${countFemale} voices`;
+
+        // ─── Lightbox ───
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+        document.querySelectorAll('.plate img').forEach(img => {
+            img.addEventListener('click', () => { lb.classList.add('active'); lbImg.src = img.src; });
+        });
+        document.getElementById('lightbox-close').addEventListener('click', () => lb.classList.remove('active'));
+        lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('active'); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('active'); });
+
+        // ─── Reveal on intersect ───
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+        // ─── Host text fade (with mobile fix carried from original) ───
+        const hostText = document.querySelector('.host-text');
+        if (hostText) {
+            const paragraphs = hostText.querySelectorAll('p');
+            const obs = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                if (entry.isIntersecting) {
+                    paragraphs.forEach((p, i) => setTimeout(() => p.classList.add('visible'), i * 120));
+                } else if (window.innerWidth > 900) {
+                    paragraphs.forEach(p => p.classList.remove('visible'));
+                }
+            }, { threshold: 0.15, rootMargin: '-80px 0px' });
+            obs.observe(hostText);
+        }
+        const hostImg = document.querySelector('.host-image img');
+        if (hostImg) {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) e.target.classList.add('visible');
+                    else if (window.innerWidth > 900) e.target.classList.remove('visible');
+                });
+            }, { threshold: 0.15, rootMargin: '-150px 0px' });
+            obs.observe(hostImg);
+        }
+    </script>
+</body>
+</html>
