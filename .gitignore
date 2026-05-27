@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (Wrangler / 향후 도구 대비)
+node_modules/
+.wrangler/
+dist/
+build/
+
+# 환경 변수
+.env
+.env.*
+!.env.example
+
+# 로그
+*.log
+npm-debug.log*
+
+# 임시 / 백업
+*.tmp
+*.bak
+.cache/
+
+# 카카오톡 등 외부에서 받은 미정리 사진
+KakaoTalk_Photo_*
