@@ -166,29 +166,76 @@
         }
 
         .wordmark .lede {
-            font-family: 'Noto Serif KR', 'Fraunces', serif;
-            font-weight: 300;
-            font-size: 0.98rem;
-            line-height: 1.95;
-            color: var(--ink-muted);
             margin: 0;
             padding-bottom: 8px;
             border-left: 1px solid var(--rule);
-            padding-left: 24px;
+            padding-left: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
         }
-        .wordmark .lede strong {
+        .wordmark .lede p { margin: 0; }
+
+        .wordmark .lede .lede-lead {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: clamp(1.05rem, 1.4vw, 1.18rem);
+            line-height: 1.7;
             color: var(--paper);
-            font-weight: 400;
+            letter-spacing: -0.005em;
         }
-        .wordmark .lede .quote-mark {
+        .wordmark .lede .lede-lead strong {
+            font-style: normal;
+            font-weight: 500;
+            color: var(--accent-orange);
+            letter-spacing: 0.01em;
+        }
+        .wordmark .lede .lede-lead .quote-mark {
             font-family: 'Fraunces', serif;
             font-style: italic;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--accent-orange);
             line-height: 0;
             position: relative;
             top: 0.25em;
             margin-right: 4px;
+        }
+
+        .wordmark .lede .lede-body {
+            font-family: 'Noto Serif KR', serif;
+            font-weight: 300;
+            font-size: 0.92rem;
+            line-height: 1.9;
+            color: var(--ink-muted);
+        }
+
+        .wordmark .lede .lede-caption {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--rule-faint);
+        }
+        .wordmark .lede .lede-caption .caption-text {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 0.86rem;
+            line-height: 1.5;
+            color: var(--paper-muted);
+            letter-spacing: -0.005em;
+            flex: 1;
+        }
+        .wordmark .lede .lede-caption .arrow-down {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.3rem;
+            color: var(--accent-orange);
+            flex-shrink: 0;
+            line-height: 1;
         }
 
         /* ─────── Section rule ─────── */
@@ -420,6 +467,35 @@
             border-color: rgba(96, 165, 250, 0.55);
             background: rgba(96, 165, 250, 0.04);
         }
+        .volume--released .stamp::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg,
+                transparent 35%,
+                rgba(96, 165, 250, 0.32) 50%,
+                transparent 65%);
+            transform: translateX(-130%);
+            animation: shimmer 3.8s 0.4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .volume--released .stamp.stamp--unbound {
+            color: var(--paper);
+            border-color: var(--rule);
+            background: rgba(232, 223, 201, 0.04);
+        }
+        .volume--released .stamp.stamp--unbound::after { display: none; }
+        .volume--released .stamp.stamp--coming-soon {
+            color: var(--accent-purple);
+            border-color: rgba(167, 139, 250, 0.55);
+            background: rgba(167, 139, 250, 0.04);
+        }
+        .volume--released .stamp.stamp--coming-soon::after {
+            background: linear-gradient(115deg,
+                transparent 35%,
+                rgba(167, 139, 250, 0.36) 50%,
+                transparent 65%);
+        }
         .volume--released:hover {
             padding-left: 24px;
             background: linear-gradient(90deg, rgba(251, 191, 36, 0.035), transparent 60%);
@@ -477,42 +553,83 @@
         .volume--sealed:hover .vol-number { color: rgba(232, 223, 201, 0.42); }
         .volume--sealed:hover .arrow { transform: rotate(-45deg) translateX(4px); color: var(--accent-purple); }
 
-        /* ─────── About entry — editorial CTA between intro and Contents ─────── */
+        /* Unarchived state — past volumes, no animation, muted paper tone */
+        .volume--unarchived { cursor: pointer; }
+        .volume--unarchived .vol-number { color: var(--paper-faint); }
+        .volume--unarchived .vol-number .roman { color: rgba(232, 223, 201, 0.18); }
+        .volume--unarchived .title { color: var(--paper-muted); }
+        .volume--unarchived .title em { color: var(--paper-muted); font-style: italic; }
+        .volume--unarchived .meta-grid dd { color: var(--paper-muted); }
+        .volume--unarchived .meta-grid dt { color: rgba(232, 223, 201, 0.32); }
+        .volume--unarchived .arrow {
+            color: var(--paper-muted);
+            transform: rotate(-30deg);
+            font-size: 1.6rem;
+        }
+        .volume--unarchived .stamp {
+            color: var(--paper-muted);
+            border-color: var(--rule);
+            background: rgba(232, 223, 201, 0.03);
+        }
+        .volume--unarchived:hover .vol-number { color: rgba(232, 223, 201, 0.42); }
+        .volume--unarchived:hover .vol-number .roman { color: rgba(232, 223, 201, 0.4); }
+        .volume--unarchived:hover .arrow { transform: rotate(-45deg) translateX(4px); color: var(--paper); }
+
+        /* ─────── About entry — centered pill CTA between intro and Contents ─────── */
         .about-link {
-            padding: 24px 0 0;
+            padding: 40px 0 12px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
         }
         .about-link a {
             display: inline-flex;
             align-items: baseline;
             gap: 18px;
+            padding: 14px 30px;
             text-decoration: none;
             color: var(--paper-muted);
             font-family: 'Outfit', sans-serif;
-            font-size: 0.7rem;
+            font-size: 0.78rem;
             letter-spacing: 0.32em;
             text-transform: uppercase;
             font-weight: 500;
-            padding: 6px 2px;
-            border-bottom: 1px solid transparent;
-            transition: color 0.4s ease, border-color 0.4s ease, gap 0.4s cubic-bezier(.2,.7,.2,1);
+            border: 1px solid var(--rule);
+            border-radius: 999px;
+            background: rgba(232, 223, 201, 0.025);
+            transition: color 0.5s ease, border-color 0.5s ease, background 0.5s ease, gap 0.5s cubic-bezier(.2,.7,.2,1);
+        }
+        .about-link .glyph {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.35rem;
+            line-height: 0;
+            color: var(--accent-orange);
+            letter-spacing: 0;
+            position: relative;
+            top: 0.18em;
         }
         .about-link .ko {
             font-family: 'Fraunces', 'Noto Serif KR', serif;
             font-style: italic;
             font-weight: 400;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             letter-spacing: -0.005em;
             text-transform: none;
             color: var(--paper);
             transition: color 0.4s ease;
         }
+        .about-link .sep {
+            color: rgba(232, 223, 201, 0.3);
+            font-size: 0.85rem;
+            letter-spacing: 0;
+            line-height: 1;
+        }
         .about-link .arrow {
             font-family: 'Fraunces', serif;
             font-style: italic;
             font-weight: 300;
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             line-height: 1;
             color: var(--accent-orange);
             letter-spacing: 0;
@@ -520,13 +637,15 @@
         }
         .about-link a:hover {
             color: var(--accent-orange);
-            gap: 24px;
+            border-color: var(--accent-orange);
+            background: rgba(251, 191, 36, 0.06);
+            gap: 22px;
         }
         .about-link a:hover .ko {
             color: var(--accent-orange);
         }
         .about-link a:hover .arrow {
-            transform: translateX(10px);
+            transform: translateX(8px);
         }
 
         /* ─────── Footer plate ─────── */
@@ -661,19 +780,24 @@
                 <em>Noted</em>.<br>
                 Bound.
             </h1>
-            <p class="lede reveal r4">
-                <span class="quote-mark">“</span>술트럭파티는 참여자들이 직접 가져온 술을 함께 시음하고,
-                한 잔 한 잔에 <strong>0점에서 5점 사이의 평점</strong>을 매기는 자리입니다.
-                매 회차의 시음 결과를 한 권의 리포트로 묶어 보관합니다.<br><br>
-                아래는 지금까지 발행되었거나 곧 개봉될 시음 권(卷)의 목록입니다.
-            </p>
+            <div class="lede reveal r4">
+                <p class="lede-lead">
+                    <span class="quote-mark">“</span><strong>술트럭파티</strong>는 참여자들이 직접 가져온 술을 함께 시음하며,
+                    한 잔의 인상을 서로 나누는 자리입니다.
+                </p>
+                <p class="lede-body">
+                    매 회차의 시음 결과를 한 권의 리포트로 묶어 보관합니다.
+                </p>
+            </div>
         </section>
 
-        <!-- About entry point — editorial CTA -->
+        <!-- About entry point — pill CTA, centered -->
         <div class="about-link reveal r5">
             <a href="./about/">
+                <span class="glyph">⁂</span>
                 <span class="ko">술트럭 파티에 대하여</span>
-                <span>About the series</span>
+                <span class="sep">·</span>
+                <span class="en">About the series</span>
                 <span class="arrow">→</span>
             </a>
         </div>
@@ -682,11 +806,92 @@
         <div class="section-rule reveal r5">
             <span class="tag"><b>The Volumes</b> &nbsp;/&nbsp; 시음 권 목록</span>
             <span class="line"></span>
-            <span class="meta"><b>02</b> entries &nbsp;·&nbsp; <i>arranged chronologically</i></span>
+            <span class="meta"><b>05</b> entries &nbsp;·&nbsp; <i>arranged chronologically</i></span>
         </div>
 
         <!-- Volumes ledger -->
         <nav class="volumes">
+
+            <!-- Vol. 00 — Unarchived -->
+            <a class="volume volume--released reveal r6" href="./0th/" aria-label="0회차 — 술을비웁니다">
+                <div class="num">
+                    <span class="vol-label">Volume</span>
+                    <span class="vol-number"><span class="roman">№</span>00</span>
+                </div>
+                <div class="body">
+                    <h2 class="title">
+                        <em>맨 처음의 한 잔, 한 권의 시작.</em>
+                    </h2>
+                    <dl class="meta-grid">
+                        <div><dt>Date</dt><dd>2020.06.27<span class="small"> · Jun</span></dd></div>
+                        <div><dt>Venue</dt><dd>서울 성수동<span class="small"> · 동네 카페 한쪽</span></dd></div>
+                        <div><dt>Guests</dt><dd>—</dd></div>
+                        <div><dt>Pours</dt><dd>—</dd></div>
+                    </dl>
+                </div>
+                <div class="status">
+                    <span class="stamp stamp--unbound">
+                        <span class="bullet"></span>Unbound
+                    </span>
+                    <div class="glyph-row">
+                        <span class="arrow">↗</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Vol. 01 — Unarchived -->
+            <a class="volume volume--released reveal r6" href="./1st/" aria-label="1회차 — 시즌1">
+                <div class="num">
+                    <span class="vol-label">Volume</span>
+                    <span class="vol-number"><span class="roman">№</span>01</span>
+                </div>
+                <div class="body">
+                    <h2 class="title">
+                        <em>2022년의 여름밤, 양재의 어느 방.</em>
+                    </h2>
+                    <dl class="meta-grid">
+                        <div><dt>Date</dt><dd>2022.08.27<span class="small"> · Aug</span></dd></div>
+                        <div><dt>Venue</dt><dd>서울 양재동<span class="small"> · 동네 파티룸</span></dd></div>
+                        <div><dt>Guests</dt><dd>—</dd></div>
+                        <div><dt>Pours</dt><dd>16<span class="small"> · 종</span></dd></div>
+                    </dl>
+                </div>
+                <div class="status">
+                    <span class="stamp stamp--unbound">
+                        <span class="bullet"></span>Unbound
+                    </span>
+                    <div class="glyph-row">
+                        <span class="arrow">↗</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Vol. 02 — Unarchived -->
+            <a class="volume volume--released reveal r6" href="./2nd/" aria-label="2회차 — 시즌2">
+                <div class="num">
+                    <span class="vol-label">Volume</span>
+                    <span class="vol-number"><span class="roman">№</span>02</span>
+                </div>
+                <div class="body">
+                    <h2 class="title">
+                        <em>가을의 끝, 양재의 밤.</em>
+                    </h2>
+                    <dl class="meta-grid">
+                        <div><dt>Date</dt><dd>2022.11.19<span class="small"> · Nov</span></dd></div>
+                        <div><dt>Venue</dt><dd>서울 양재동<span class="small"> · 동네 파티룸</span></dd></div>
+                        <div><dt>Guests</dt><dd>11<span class="small"> 명</span></dd></div>
+                        <div><dt>Pours</dt><dd>—</dd></div>
+                    </dl>
+                </div>
+                <div class="status">
+                    <span class="stamp stamp--unbound">
+                        <span class="bullet"></span>Unbound
+                    </span>
+                    <div class="glyph-row">
+                        <span class="arrow">↗</span>
+                    </div>
+                </div>
+            </a>
 
             <!-- Vol. 03 — Released -->
             <a class="volume volume--released reveal r6" href="./3rd/" aria-label="3회차 리포트로 이동">
@@ -724,14 +929,13 @@
                         <span class="bullet"></span>Released
                     </span>
                     <div class="glyph-row">
-                        <span class="ord">Read the report</span>
                         <span class="arrow">→</span>
                     </div>
                 </div>
             </a>
 
             <!-- Vol. 04 — Sealed -->
-            <a class="volume volume--sealed reveal r7" href="./4th/" aria-label="4회차 — 봉인됨">
+            <a class="volume volume--released reveal r7" href="./4th/" aria-label="4회차 — 봉인됨">
                 <div class="num">
                     <span class="vol-label">Volume</span>
                     <span class="vol-number"><span class="roman">№</span>04</span>
@@ -762,11 +966,10 @@
                 </div>
 
                 <div class="status">
-                    <span class="stamp">
+                    <span class="stamp stamp--coming-soon">
                         <span class="bullet"></span>Coming Soon
                     </span>
                     <div class="glyph-row">
-                        <span class="ord">Awaiting the cork</span>
                         <span class="arrow">↗</span>
                     </div>
                 </div>
@@ -778,9 +981,9 @@
         <footer class="colophon reveal r7">
             <div class="left">Made by Jongkook</div>
             <div class="center">
-                A pour, then<span class="ornament">∽</span>a verdict
+                Tasted. Noted. Bound.
             </div>
-            <div class="right">Made in Seoul &nbsp;·&nbsp; MMXXVI</div>
+            <div class="right">Vintage MMXX</div>
         </footer>
 
     </div>
