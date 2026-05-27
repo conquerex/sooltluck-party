@@ -79,10 +79,8 @@
 
         /* ─────── Masthead ─────── */
         .masthead {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: baseline;
-            gap: 32px;
+            display: flex;
+            justify-content: center;
             padding-bottom: 22px;
             border-bottom: 1px solid var(--rule);
             font-family: 'Outfit', sans-serif;
@@ -479,6 +477,58 @@
         .volume--sealed:hover .vol-number { color: rgba(232, 223, 201, 0.42); }
         .volume--sealed:hover .arrow { transform: rotate(-45deg) translateX(4px); color: var(--accent-purple); }
 
+        /* ─────── About entry — editorial CTA between intro and Contents ─────── */
+        .about-link {
+            padding: 24px 0 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .about-link a {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 18px;
+            text-decoration: none;
+            color: var(--paper-muted);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding: 6px 2px;
+            border-bottom: 1px solid transparent;
+            transition: color 0.4s ease, border-color 0.4s ease, gap 0.4s cubic-bezier(.2,.7,.2,1);
+        }
+        .about-link .ko {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.05rem;
+            letter-spacing: -0.005em;
+            text-transform: none;
+            color: var(--paper);
+            transition: color 0.4s ease;
+        }
+        .about-link .arrow {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.4rem;
+            line-height: 1;
+            color: var(--accent-orange);
+            letter-spacing: 0;
+            transition: transform 0.5s cubic-bezier(.2,.7,.2,1);
+        }
+        .about-link a:hover {
+            color: var(--accent-orange);
+            gap: 24px;
+        }
+        .about-link a:hover .ko {
+            color: var(--accent-orange);
+        }
+        .about-link a:hover .arrow {
+            transform: translateX(10px);
+        }
+
         /* ─────── Footer plate ─────── */
         .colophon {
             margin-top: 64px;
@@ -596,9 +646,7 @@
 
         <!-- Masthead -->
         <header class="masthead reveal r1">
-            <div class="left">Seoul · Korea</div>
-            <div class="center">Sooltluck <span class="glyph">⁂</span> Party Archive</div>
-            <div class="right">N° <b>04</b> &nbsp;·&nbsp; Vintage&nbsp;2025—</div>
+            <div class="center">Sooltluck <span class="glyph">⁂</span> Party</div>
         </header>
 
         <!-- Wordmark -->
@@ -621,6 +669,15 @@
             </p>
         </section>
 
+        <!-- About entry point — editorial CTA -->
+        <div class="about-link reveal r5">
+            <a href="./about/">
+                <span class="ko">술트럭 파티에 대하여</span>
+                <span>About the series</span>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+
         <!-- Section rule -->
         <div class="section-rule reveal r5">
             <span class="tag"><b>The Volumes</b> &nbsp;/&nbsp; 시음 권 목록</span>
@@ -640,20 +697,20 @@
 
                 <div class="body">
                     <h2 class="title">
-                        늦가을의 강남, 서른세 병과 <em>열일곱 입의 판결</em>
+                        한 잔에서 시작된, <em>한 장의 기록.</em>
                     </h2>
                     <dl class="meta-grid">
                         <div>
                             <dt>Date</dt>
-                            <dd>2025.11.22<span class="small"> · Sat</span></dd>
+                            <dd>2025.11.22<span class="small"> · Sat · 18:30</span></dd>
                         </div>
                         <div>
                             <dt>Venue</dt>
                             <dd>서울 강남<span class="small"> · 세모네모</span></dd>
                         </div>
                         <div>
-                            <dt>Tasters</dt>
-                            <dd>17<span class="small"> / 18 명</span></dd>
+                            <dt>Guests</dt>
+                            <dd>18<span class="small"> 명</span></dd>
                         </div>
                         <div>
                             <dt>Pours</dt>
@@ -719,7 +776,7 @@
 
         <!-- Colophon -->
         <footer class="colophon reveal r7">
-            <div class="left">Curated &nbsp;·&nbsp; Jongkook &amp; Jiwon</div>
+            <div class="left">Made by Jongkook</div>
             <div class="center">
                 A pour, then<span class="ornament">∽</span>a verdict
             </div>
