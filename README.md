@@ -23,17 +23,20 @@
 python3 -m http.server 8000
 ```
 
+- **Local**: http://localhost:8000/
+- **Production**: https://sooltluck-party.pages.dev/
+
 외부 의존성은 CDN뿐 — Google Fonts (Fraunces, Outfit, Noto Serif/Sans KR) + Chart.js. 오프라인이면 차트/폰트가 깨집니다.
 
 ## Volumes
 
 | Vol. | Date | Stamp | Report |
 |---|---|---|---|
-| № 00 | 2020.06.27 | Archived | — |
-| № 01 | 2022.08.27 | Archived | — |
-| № 02 | 2022.11.19 | Archived | — |
-| № 03 | 2025.11.22 | Archived | `/3rd/` |
-| № 04 | 2026.05.16 | Released | `/4th/` |
+| Vol. 00 | 2020.06.27 | Archived | — |
+| Vol. 01 | 2022.08.27 | Archived | — |
+| Vol. 02 | 2022.11.19 | Archived | — |
+| Vol. 03 | 2025.11.22 | Archived | `/3rd/` |
+| Vol. 04 | 2026.05.16 | Released | `/4th/` |
 
 ## Notes
 
