@@ -17,6 +17,7 @@
             --paper-muted: #8B826B;
             --primary-blue: #60A5FA;
             --accent-orange: #FBBF24;
+            --accent-purple: #A78BFA;
             --rule: rgba(232, 223, 201, 0.18);
         }
         * { box-sizing: border-box; }
@@ -38,7 +39,7 @@
             inset: 0;
             background:
                 radial-gradient(ellipse 70% 60% at 25% 20%, rgba(251, 191, 36, 0.08), transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 90%, rgba(232, 223, 201, 0.05), transparent 60%);
+                radial-gradient(ellipse 60% 50% at 80% 90%, rgba(167, 139, 250, 0.06), transparent 60%);
             z-index: 0;
             pointer-events: none;
         }
@@ -60,6 +61,8 @@
             padding: 32px 48px 36px;
             display: flex;
             flex-direction: column;
+            max-width: 1180px;
+            margin: 0 auto;
         }
 
         /* Crumbs */
@@ -97,33 +100,31 @@
 
         main {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 64px 0;
-            position: relative;
+            padding: 64px 0 32px;
         }
 
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 96px;
+        }
         .vol-eyebrow {
             font-family: 'Outfit', sans-serif;
             font-size: 0.76rem;
             letter-spacing: 0.52em;
             text-transform: uppercase;
             color: var(--accent-orange);
-            margin-bottom: 14px;
+            margin: 0 0 22px;
         }
-
         h1 {
             font-family: 'Fraunces', 'Noto Serif KR', serif;
             font-variation-settings: 'opsz' 144, 'wght' 380;
-            font-size: clamp(2.4rem, 6vw, 4.4rem);
-            line-height: 1.2;
+            font-size: clamp(2.4rem, 6vw, 4.6rem);
+            line-height: 1.18;
             letter-spacing: -0.015em;
-            margin: 28px 0 24px;
+            margin: 0 auto 28px;
             color: var(--paper);
-            max-width: 820px;
+            max-width: 880px;
         }
         h1 em {
             font-style: italic;
@@ -134,73 +135,300 @@
             -webkit-text-fill-color: transparent;
             color: transparent;
         }
-
-        .ko-title {
-            font-family: 'Fraunces', 'Noto Serif KR', serif;
-            font-variation-settings: 'opsz' 96, 'wght' 380;
-            font-size: clamp(1.4rem, 2.8vw, 2.1rem);
-            color: var(--paper);
-            line-height: 1.3;
-            margin: 56px 0 18px;
-            max-width: 620px;
-            letter-spacing: -0.005em;
-        }
-        .ko-title em {
-            font-style: italic;
-            background: linear-gradient(110deg, var(--primary-blue), var(--accent-orange));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            font-weight: 300;
-        }
-
-        .quote {
+        .hero .quote {
             font-family: 'Fraunces', serif;
             font-style: italic;
             font-weight: 300;
-            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-size: clamp(1rem, 1.9vw, 1.22rem);
             line-height: 1.6;
             color: var(--paper-muted);
-            max-width: 520px;
+            max-width: 560px;
             margin: 0 auto;
         }
 
-        /* Status line */
-        .status-line {
-            margin-top: 56px;
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 24px;
-            border: 1px solid rgba(251, 191, 36, 0.35);
-            border-radius: 999px;
-            background: rgba(251, 191, 36, 0.04);
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.74rem;
-            letter-spacing: 0.32em;
-            text-transform: uppercase;
+        /* Section header */
+        section {
+            margin-bottom: 96px;
+        }
+        .section-head {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 36px;
+            align-items: baseline;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--rule);
+            margin-bottom: 36px;
+        }
+        .section-head .no {
+            font-family: 'Fraunces', serif;
+            font-variation-settings: 'opsz' 144, 'wght' 320;
+            font-style: italic;
+            font-size: 2.6rem;
             color: var(--accent-orange);
-            position: relative;
-            overflow: hidden;
+            line-height: 1;
         }
-        .status-line .pulse {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-orange);
-            box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.55);
-            animation: pulse 2.4s ease-out infinite;
+        .section-head .heading {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
-        @keyframes pulse {
-            0%   { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.55); }
-            70%  { box-shadow: 0 0 0 14px rgba(251, 191, 36, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+        .section-head .label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+        }
+        .section-head .title {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-variation-settings: 'opsz' 96, 'wght' 380;
+            font-size: clamp(1.4rem, 2.8vw, 2rem);
+            color: var(--paper);
+            line-height: 1.25;
+        }
+
+        .section-body {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 36px;
+        }
+        .section-body > .spacer { display: block; }
+        .section-body .content {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .lede {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-variation-settings: 'opsz' 48, 'wght' 360;
+            font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+            line-height: 1.7;
+            color: var(--paper);
+            max-width: 720px;
+            margin: 0;
+        }
+        .lede em {
+            font-style: italic;
+            color: var(--accent-orange);
+            font-weight: 400;
+        }
+
+        /* Ritual grid */
+        .ritual-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-top: 12px;
+        }
+        .ritual {
+            border: 1px solid var(--rule);
+            padding: 24px 22px 26px;
+            border-radius: 4px;
+            background: rgba(232, 223, 201, 0.025);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: all 0.5s cubic-bezier(.2,.7,.2,1);
+        }
+        .ritual:hover {
+            border-color: rgba(251, 191, 36, 0.4);
+            background: rgba(251, 191, 36, 0.04);
+            transform: translateY(-3px);
+        }
+        .ritual .step {
+            font-family: 'Fraunces', serif;
+            font-variation-settings: 'opsz' 96, 'wght' 320;
+            font-style: italic;
+            font-size: 1.6rem;
+            color: var(--accent-orange);
+            line-height: 1;
+        }
+        .ritual .label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.66rem;
+            letter-spacing: 0.36em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+        }
+        .ritual .body {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.94rem;
+            line-height: 1.55;
+            color: var(--paper);
+            margin: 0;
+        }
+
+        /* Plate (image) */
+        .plate {
+            margin: 8px 0;
+        }
+        .plate img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 2px;
+            cursor: zoom-in;
+        }
+        .plate-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .plate-pair img {
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+        .plate figcaption {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.66rem;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+            margin-top: 10px;
+        }
+        .plate figcaption b {
+            color: var(--accent-orange);
+            font-weight: 400;
+            padding-right: 8px;
+        }
+
+        /* Roles */
+        .roles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-top: 6px;
+        }
+        .role {
+            border: 1px solid var(--rule);
+            padding: 30px 28px 32px;
+            border-radius: 4px;
+            background: rgba(232, 223, 201, 0.025);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: all 0.5s cubic-bezier(.2,.7,.2,1);
+        }
+        .role:hover {
+            border-color: rgba(96, 165, 250, 0.4);
+            background: rgba(96, 165, 250, 0.04);
+        }
+        .role .glyph {
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .role .name {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-variation-settings: 'opsz' 72, 'wght' 420;
+            font-size: 1.3rem;
+            color: var(--paper);
+            margin: 0;
+        }
+        .role .name em {
+            font-style: italic;
+            color: var(--primary-blue);
+            font-weight: 300;
+            margin-left: 8px;
+            font-size: 0.85em;
+        }
+        .role .body {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.96rem;
+            line-height: 1.6;
+            color: var(--paper);
+            margin: 0;
+        }
+
+        /* Notes */
+        .notes-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .notes-group + .notes-group {
+            margin-top: 28px;
+            padding-top: 28px;
+            border-top: 1px solid var(--rule);
+        }
+        .notes-title {
+            font-family: 'Fraunces', 'Noto Serif KR', serif;
+            font-variation-settings: 'opsz' 72, 'wght' 420;
+            font-size: 1.2rem;
+            color: var(--paper);
+            margin: 0 0 6px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .notes-title .notes-no {
+            font-style: italic;
+            font-weight: 300;
+            color: var(--accent-orange);
+            font-size: 0.92em;
+        }
+        .notes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        .note {
+            border-left: 2px solid var(--accent-purple);
+            padding: 14px 18px;
+            background: rgba(167, 139, 250, 0.05);
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.55;
+            color: var(--paper);
+        }
+        .notes-text {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.96rem;
+            line-height: 1.7;
+            color: var(--paper);
+            margin: 0;
+            max-width: 720px;
+        }
+
+        /* Contact */
+        .contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            text-align: center;
+            padding: 48px 24px;
+            border: 1px solid var(--rule);
+            border-radius: 4px;
+            background: rgba(232, 223, 201, 0.025);
+        }
+        .contact .label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: var(--paper-muted);
+        }
+        .contact a {
+            font-family: 'Fraunces', serif;
+            font-variation-settings: 'opsz' 96, 'wght' 380;
+            font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+            color: var(--paper);
+            text-decoration: none;
+            border-bottom: 1px solid var(--rule);
+            padding-bottom: 4px;
+            transition: all 0.4s;
+        }
+        .contact a:hover {
+            color: var(--accent-orange);
+            border-bottom-color: var(--accent-orange);
         }
 
         /* Back link */
+        .back-wrap {
+            text-align: center;
+            margin-top: 24px;
+        }
         .back {
-            margin-top: 48px;
             display: inline-flex;
             align-items: center;
             gap: 12px;
@@ -244,7 +472,7 @@
             letter-spacing: 0.28em;
             text-transform: uppercase;
             color: var(--paper-muted);
-            margin-top: 24px;
+            margin-top: 48px;
         }
         footer .center {
             font-family: 'Fraunces', serif;
@@ -256,11 +484,6 @@
             color: var(--paper);
         }
         footer .right { text-align: right; }
-        footer .center .ornament {
-            color: var(--accent-orange);
-            padding: 0 12px;
-            font-size: 1.1em;
-        }
 
         /* Reveal */
         .reveal {
@@ -269,15 +492,38 @@
             animation: rise 1s cubic-bezier(.2,.7,.2,1) forwards;
         }
         .r1 { animation-delay: 0.05s; }
-        .r2 { animation-delay: 0.20s; }
-        .r3 { animation-delay: 0.38s; }
-        .r4 { animation-delay: 0.56s; }
-        .r5 { animation-delay: 0.74s; }
-        .r6 { animation-delay: 0.92s; }
+        .r2 { animation-delay: 0.18s; }
+        .r3 { animation-delay: 0.30s; }
+        .r4 { animation-delay: 0.42s; }
+        .r5 { animation-delay: 0.54s; }
+        .r6 { animation-delay: 0.66s; }
         @keyframes rise {
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: zoom-out;
+            padding: 32px;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 92vw;
+            max-height: 92vh;
+            object-fit: contain;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (max-width: 1100px) {
+            .ritual-grid { grid-template-columns: repeat(2, 1fr); }
+        }
         @media (max-width: 900px) {
             .frame { padding: 22px 22px 28px; }
             .crumbs {
@@ -290,10 +536,19 @@
             .crumbs .right { text-align: left; }
 
             main { padding: 32px 0 24px; }
-            h1 { font-size: clamp(1.8rem, 7vw, 2.6rem); line-height: 1.25; margin: 18px 0 18px; }
-            .quote { font-size: 1rem; }
+            .hero { margin-bottom: 64px; }
+            h1 { font-size: clamp(1.9rem, 7vw, 2.7rem); line-height: 1.22; }
+            section { margin-bottom: 64px; }
 
-            .status-line { padding: 10px 18px; font-size: 0.66rem; letter-spacing: 0.24em; }
+            .section-head { grid-template-columns: 1fr; gap: 10px; }
+            .section-head .no { font-size: 2rem; }
+            .section-body { grid-template-columns: 1fr; gap: 18px; }
+            .section-body > .spacer { display: none; }
+
+            .ritual-grid { grid-template-columns: 1fr; }
+            .roles { grid-template-columns: 1fr; }
+            .notes { grid-template-columns: 1fr; }
+            .plate-pair { grid-template-columns: 1fr; }
 
             footer {
                 grid-template-columns: 1fr;
@@ -314,25 +569,170 @@
         </nav>
 
         <main>
-            <p class="vol-eyebrow reveal r2">About · 서장</p>
 
-            <h1 class="reveal r3">
-                술트럭 파티에 대하여,<br>
-                <em>한 잔의 의례.</em>
-            </h1>
+            <section class="hero">
+                <p class="vol-eyebrow reveal r2">About · 서장</p>
+                <h1 class="reveal r3">
+                    두 발로 들어와,<br>
+                    <em>네 발로 나가는</em><br>
+                    🍷 술트럭파티.
+                </h1>
+                <p class="quote reveal r4">
+                    Two legs in <span style="color:var(--accent-orange); padding:0 6px;">⁂</span> Four legs out —<br>
+                    a note on the series, its hosts, and the ritual.
+                </p>
+            </section>
 
-            <p class="quote reveal r5">
-                A note on the series — its hosts, the ritual,<br>
-                and how the pour becomes a record.
-            </p>
+            <section>
+                <header class="section-head">
+                    <div class="no">I.</div>
+                    <div class="heading">
+                        <span class="label">The Gathering · 모임</span>
+                        <h2 class="title">함께 마시고, 함께 기록하는 자리.</h2>
+                    </div>
+                </header>
+                <div class="section-body">
+                    <div class="spacer"></div>
+                    <div class="content">
+                        <p class="lede">
+                            <em>술트럭파티</em>는 음식을 각자 가져와 함께 나누는
+                            <em>포틀럭 파티 (Potluck Party)</em> 에서 이름을 따왔습니다.
+                            <em>술</em> 과 <em>Potluck</em> 이 만난, 같이 가져오고 같이 비우는 자리입니다.
+                        </p>
+                        <p class="lede">
+                            각자가 함께 나누고 싶은 술을 가져와 서로의 잔을 채우고,
+                            한 잔의 인상을 짧게 남깁니다.
+                            그 흔적은 함께한 사람들의 평가표 위에 모이고,
+                            다시 한 권(卷)의 리포트로 묶여 아카이브에 더해집니다.
+                        </p>
+                        <figure class="plate">
+                            <img src="img_party_scene.jpg" alt="술트럭파티 모임 한 장면" loading="lazy">
+                            <figcaption><b>plate i.</b> 둘러앉아 비우는 한 저녁</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
 
-<a class="back reveal r6" href="../">
-                <span class="arr">←</span> Back to the Archive
-            </a>
+            <section>
+                <header class="section-head">
+                    <div class="no">II.</div>
+                    <div class="heading">
+                        <span class="label">The Ritual · 진행</span>
+                        <h2 class="title">우리가 지향하는 네 가지.</h2>
+                    </div>
+                </header>
+                <div class="section-body">
+                    <div class="spacer"></div>
+                    <div class="content">
+                        <p class="lede">
+                            취기보다는 <em>발견</em>에 가까운 자리를 위해, 매회 다음 네 가지를 지킵니다.
+                        </p>
+                        <div class="ritual-grid">
+                            <div class="ritual">
+                                <div class="step">i.</div>
+                                <div class="label">Curation</div>
+                                <p class="body">회차마다 새로 큐레이션된 술이 준비됩니다.</p>
+                            </div>
+                            <div class="ritual">
+                                <div class="step">ii.</div>
+                                <div class="label">Portion</div>
+                                <p class="body">제대로 맛을 느낄 수 있는 양으로 따릅니다.</p>
+                            </div>
+                            <div class="ritual">
+                                <div class="step">iii.</div>
+                                <div class="label">Pairing</div>
+                                <p class="body">가이드에 따라 페어링 안주와 함께 마십니다.</p>
+                            </div>
+                            <div class="ritual">
+                                <div class="step">iv.</div>
+                                <div class="label">Notes</div>
+                                <p class="body">평가표를 작성해보고 나의 취향을 발견합니다.</p>
+                            </div>
+                        </div>
+                        <figure class="plate" style="margin-top: 24px;">
+                            <img src="img_bottle_lineup.jpg" alt="다양한 주종이 일렬로 놓인 모습" loading="lazy">
+                            <figcaption><b>plate ii.</b> 한자리에 모이기 어려운 결의 술들</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <header class="section-head">
+                    <div class="no">III.</div>
+                    <div class="heading">
+                        <span class="label">House Notes · 안내</span>
+                        <h2 class="title">함께 비우기 전에.</h2>
+                    </div>
+                </header>
+                <div class="section-body">
+                    <div class="spacer"></div>
+                    <div class="content">
+
+                        <div class="notes-group">
+                            <h3 class="notes-title"><span class="notes-no">i.</span> 안전 · Safety</h3>
+                            <div class="notes">
+                                <div class="note">나에게도 남에게도 음주를 강요하지 마세요.</div>
+                                <div class="note">절대로 운전해서 참가하지 말아주세요.</div>
+                                <div class="note">술을 마시는 만큼 물도 많이 마셔주세요. 생수는 충분히 준비됩니다.</div>
+                                <div class="note">타인이 부담스러워 할 행동은 삼가해주세요.</div>
+                                <div class="note">모두의 안전과 즐거움을 위해 호스트가 행동을 제지할 수 있습니다.</div>
+                                <div class="note">몸이 안 좋아지면 호스트 또는 주변에 바로 도움을 요청하세요.</div>
+                            </div>
+                        </div>
+
+                        <div class="notes-group">
+                            <h3 class="notes-title"><span class="notes-no">ii.</span> 시음 매너 · Tasting</h3>
+                            <p class="notes-text">
+                                내가 어떤 술을 좋아하는지, 각각의 술이 가진 결을 천천히 음미해보세요.
+                                한 잔의 인상은 평가표에 짧게 남기면 충분합니다.
+                            </p>
+                        </div>
+
+                        <div class="notes-group">
+                            <h3 class="notes-title"><span class="notes-no">iii.</span> 참가비 · Fee</h3>
+                            <p class="notes-text">
+                                참가비는 대관비, 간단한 다과와 페어링 안주 준비에 사용됩니다.
+                                매 회차의 구성과 규모에 따라 달라지며, 회차 페이지에서 따로 안내됩니다.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <header class="section-head">
+                    <div class="no">V.</div>
+                    <div class="heading">
+                        <span class="label">Correspondence · 편지</span>
+                        <h2 class="title">한 잔 같이 나눌 분께.</h2>
+                    </div>
+                </header>
+                <div class="section-body">
+                    <div class="spacer"></div>
+                    <div class="content">
+                        <div class="contact">
+                            <span class="label">Write to the host</span>
+                            <a href="mailto:conquerex@gmail.com">conquerex@gmail.com</a>
+                            <p class="body" style="margin:0; font-family:'Fraunces',serif; font-style:italic; font-weight:300; font-size:0.95rem; color:var(--paper-muted);">
+                                A bottle in mind, a question, or just a note — all welcome.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="back-wrap">
+                <a class="back" href="../">
+                    <span class="arr">←</span> Back to the Archive
+                </a>
+            </div>
+
         </main>
 
-        <footer class="reveal r6">
-            <div class="left">Curated &nbsp;·&nbsp; Jongkook &amp; Jiwon</div>
+        <footer>
+            <div class="left">Curated &nbsp;·&nbsp; Jongkook</div>
             <div class="center">
                 Tasted. Noted. Bound.
             </div>
@@ -340,5 +740,27 @@
         </footer>
 
     </div>
+
+    <div class="lightbox" id="lightbox">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        (function () {
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            document.querySelectorAll('.plate img').forEach(img => {
+                img.addEventListener('click', () => {
+                    lbImg.src = img.src;
+                    lbImg.alt = img.alt;
+                    lb.classList.add('active');
+                });
+            });
+            lb.addEventListener('click', () => lb.classList.remove('active'));
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') lb.classList.remove('active');
+            });
+        })();
+    </script>
 </body>
 </html>
